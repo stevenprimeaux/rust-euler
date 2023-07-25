@@ -46,49 +46,30 @@ fn fibonacci_sum_even_upto(upto: u32) -> u32 {
 
 fn largest_prime_factor(dividend: u64) -> u64 {
     let mut current_dividend: u64 = dividend;
-
-    if current_dividend == 1 {
-        return 1;
-    }
+    let mut current_largest: u64 = 1;
 
     if current_dividend % 2 == 0 {
-        current_dividend /= 2;
+        current_largest = 2;
         while current_dividend % 2 == 0 {
             current_dividend /= 2;
         }
-        if current_dividend == 1 {
-            return 2;
-        }
     }
 
+    let mut current_try: u64 = 3;
     let mut current_sqrt: u64 = sqrt(current_dividend);
-    let mut current_largest: u64 = current_dividend;
-    loop {
-        let mut is_prime: bool = true;
-        let mut current_try: u64 = 3;
-        while current_dividend > 1 && current_try <= current_sqrt {
-            if current_dividend % current_try == 0 {
-                current_largest = current_try;
-                while current_dividend % current_try == 0 {
-                    current_dividend /= current_try
-                }
-
-                current_sqrt = sqrt(current_dividend);
-                is_prime = false;
-                break;
+    while current_dividend > 1 && current_try <= current_sqrt {
+        if current_dividend % current_try == 0 {
+            current_largest = current_try;
+            while current_dividend % current_try == 0 {
+                current_dividend /= current_try;
             }
-
-            current_try += 2
+            current_sqrt = sqrt(current_dividend);
         }
-
-        if is_prime {
-            break;
-        }
+        current_try += 2
     }
 
     if current_dividend == 1 {
         return current_largest;
     }
-
     return current_dividend;
 }
