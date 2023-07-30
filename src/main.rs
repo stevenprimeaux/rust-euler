@@ -1,10 +1,11 @@
 use num::integer::sqrt;
 
 fn main() {
-    println!("{}", sum_divisible_by_2(1000, 3, 5));
-    println!("{}", fibonacci_sum_even_upto(4000000));
-    println!("{}", largest_prime_factor(600851475143));
-    println!("{}", largest_palindrome_product_3());
+    println!("1: {}", sum_divisible_by_2(1000, 3, 5));
+    println!("2: {}", fibonacci_sum_even_upto(4000000));
+    println!("3: {}", largest_prime_factor(600851475143));
+    println!("4: {}", largest_palindrome_product_3());
+    println!("5: {}", smallest_multiple(20));
 }
 
 fn sum_divisible_by(below: u32, mult: u32) -> u32 {
@@ -118,4 +119,42 @@ fn largest_palindrome_product_3() -> u32 {
     }
 
     current_largest
+}
+
+fn is_prime(n: u64) -> bool {
+    largest_prime_factor(n) == n
+}
+
+fn get_primes_upto(k: u64) -> Vec<u64> {
+    let mut primes: Vec<u64> = vec![2];
+    let mut current_try: u64 = 3;
+    while current_try <= k {
+        if is_prime(current_try) {
+            primes.push(current_try);
+        }
+        current_try += 2;
+    }
+
+    primes
+}
+
+fn smallest_multiple(k: u64) -> u64 {
+    let primes: Vec<u64> = get_primes_upto(k);
+    let mut prime_powers: Vec<u32> = vec![1; primes.len()];
+    let mut mult: u64 = 1;
+
+    let k: f64 = k as f64;
+    let log_k: f64 = k.log(1_f64.exp());
+    let limit: u64 = k.sqrt().floor() as u64;
+
+    let mut log_p: f64;
+    for i in 0..primes.len() {
+        if primes[i] <= limit {
+            log_p = (primes[i] as f64).log(1_f64.exp());
+            prime_powers[i] = (log_k / log_p).floor() as u32;
+        }
+        mult *= primes[i].pow(prime_powers[i]);
+    }
+
+    mult
 }
