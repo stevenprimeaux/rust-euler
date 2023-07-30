@@ -1,5 +1,3 @@
-use num::integer::sqrt;
-
 fn main() {
     println!("1: {}", sum_divisible_by_2(1000, 3, 5));
     println!("2: {}", fibonacci_sum_even_upto(4000000));
@@ -57,14 +55,14 @@ fn largest_prime_factor(mut current_dividend: u64) -> u64 {
     }
 
     let mut current_try: u64 = 3;
-    let mut current_sqrt: u64 = sqrt(current_dividend);
+    let mut current_sqrt: u64 = (current_dividend as f64).sqrt() as u64;
     while current_dividend > 1 && current_try <= current_sqrt {
         if current_dividend % current_try == 0 {
             current_largest = current_try;
             while current_dividend % current_try == 0 {
                 current_dividend /= current_try;
             }
-            current_sqrt = sqrt(current_dividend);
+            current_sqrt = (current_dividend as f64).sqrt() as u64;
         }
         current_try += 2;
     }
@@ -114,7 +112,6 @@ fn largest_palindrome_product_3() -> u32 {
             }
             factor_b -= decrement_b;
         }
-
         factor_a -= 1;
     }
 
