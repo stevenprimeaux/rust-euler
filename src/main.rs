@@ -5,6 +5,7 @@ fn main() {
     println!("4: {}", largest_palindrome_product_3());
     println!("5: {}", smallest_multiple(20));
     println!("6: {}", difference_sum_squares(100));
+    println!("7: {}", get_nth_prime(10001));
 }
 
 fn sum_divisible_by(below: u32, mult: u32) -> u32 {
@@ -162,4 +163,18 @@ fn difference_sum_squares(n_terms: u32) -> u32 {
     let sum_squares: u32 = (2 * n_terms + 1) * (n_terms + 1) * n_terms / 6;
 
     sum_terms.pow(2) - sum_squares
+}
+
+fn get_nth_prime(n: u64) -> u64 {
+    let mut n_primes_current: u64 = 1;
+    let mut current_try: u64 = 1;
+
+    while n_primes_current < n {
+        current_try += 2;
+        if is_prime(current_try) {
+            n_primes_current += 1;
+        }
+    }
+
+    current_try
 }
