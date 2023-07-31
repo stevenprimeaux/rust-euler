@@ -6,7 +6,7 @@ fn main() {
     println!("5: {}", smallest_multiple(20));
     println!("6: {}", difference_sum_squares(100));
     println!("7: {}", get_nth_prime(10001));
-    println!("8: {}", largest_product());
+    println!("8: {}", largest_product(data_8()));
 }
 
 fn sum_divisible_by(below: u32, mult: u32) -> u32 {
@@ -180,8 +180,8 @@ fn get_nth_prime(n: u64) -> u64 {
     current_try
 }
 
-fn largest_product() -> u64 {
-    let grid = String::from(
+fn data_8() -> String {
+    String::from(
         "
         73167176531330624919225119674426574742355349194934
         96983520312774506326239578318016984801869478851843
@@ -204,12 +204,15 @@ fn largest_product() -> u64 {
         05886116467109405077541002256983155200055935729725
         71636269561882670428252483600823257530420752963450
         ",
-    );
+    )
+}
+
+fn largest_product(grid: String) -> u64 {
     grid.split("")
         .filter_map(|s: &str| s.parse().ok())
         .collect::<Vec<u64>>()
         .windows(13)
-        .map(|x: &[u64]| x.iter().product::<u64>())
+        .map(|x: &[u64]| x.iter().product())
         .max()
         .unwrap()
 }
