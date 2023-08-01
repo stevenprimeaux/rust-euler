@@ -7,6 +7,7 @@ fn main() {
     println!("6: {}", difference_sum_squares(100));
     println!("7: {}", get_nth_prime(10001));
     println!("8: {}", largest_product(data_8()));
+    println!("9: {}", pythagorean_triple(1000));
 }
 
 fn sum_divisible_by(below: u32, mult: u32) -> u32 {
@@ -215,4 +216,53 @@ fn largest_product(grid: String) -> u64 {
         .map(|x: &[u64]| x.iter().product())
         .max()
         .unwrap()
+}
+
+fn gcd(a: u64, b: u64) -> u64 {
+    if b == 0 {
+        return a;
+    }
+    gcd(b, a % b)
+}
+
+fn pythagorean_triple(s: u64) -> u64 {
+    let s_half: u64 = s / 2;
+    let m_limit: u64 = ((s as f64).sqrt().ceil() - 1.0) as u64;
+
+    let mut k: u64;
+    let mut s_div_m: u64;
+
+    let mut a: u64 = 0;
+    let mut b: u64 = 0;
+    let mut c: u64 = 0;
+
+    'outer: for m in 2..m_limit {
+        if s_half % m == 0 {
+            s_div_m = s_half / m;
+            while s_div_m % 2 == 0 {
+                s_div_m /= 2;
+            }
+
+            if m % 2 == 1 {
+                k = m + 2;
+            } else {
+                k = m + 1;
+            }
+
+            while (k < 2 * m) & (k <= s_div_m) {
+                if (s_div_m % k == 0) & (gcd(k, m) == 1) {
+                    let d = s_half / (k * m);
+                    let n = k - m;
+
+                    a = d * (m * m - n * n);
+                    b = 2 * d * m * n;
+                    c = d * (m * m + n * n);
+
+                    break 'outer;
+                }
+                k += 2;
+            }
+        }
+    }
+    a * b * c
 }
