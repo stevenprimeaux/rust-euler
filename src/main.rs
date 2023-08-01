@@ -1,13 +1,14 @@
 fn main() {
-    println!("1: {}", sum_divisible_by_2(1000, 3, 5));
-    println!("2: {}", fibonacci_sum_even_upto(4000000));
-    println!("3: {}", largest_prime_factor(600851475143));
-    println!("4: {}", largest_palindrome_product_3());
-    println!("5: {}", smallest_multiple(20));
-    println!("6: {}", difference_sum_squares(100));
-    println!("7: {}", get_nth_prime(10001));
-    println!("8: {}", largest_product(data_8()));
-    println!("9: {}", pythagorean_triple(1000));
+    println!("01: {}", sum_divisible_by_2(1000, 3, 5));
+    println!("02: {}", fibonacci_sum_even_upto(4000000));
+    println!("03: {}", largest_prime_factor(600851475143));
+    println!("04: {}", largest_palindrome_product_3());
+    println!("05: {}", smallest_multiple(20));
+    println!("06: {}", difference_sum_squares(100));
+    println!("07: {}", get_nth_prime(10001));
+    println!("08: {}", largest_product(data_08()));
+    println!("09: {}", pythagorean_triple(1000));
+    println!("10: {}", sum_primes_below(2000000));
 }
 
 fn sum_divisible_by(below: u32, mult: u32) -> u32 {
@@ -181,7 +182,7 @@ fn get_nth_prime(n: u64) -> u64 {
     current_try
 }
 
-fn data_8() -> String {
+fn data_08() -> String {
     String::from(
         "
         73167176531330624919225119674426574742355349194934
@@ -268,4 +269,30 @@ fn pythagorean_triple(s: u64) -> u64 {
         }
     }
     a * b * c
+}
+
+fn sum_primes_below(limit: usize) -> usize {
+    let crosslimit: usize = (limit as f64).sqrt().floor() as usize;
+    let mut sieve: Vec<bool> = vec![false; limit as usize];
+    let mut sum: usize = 0;
+
+    for i in (4..limit).step_by(2) {
+        sieve[i] = true;
+    }
+
+    for j in (3..=crosslimit).step_by(2) {
+        if !sieve[j] {
+            for k in ((j * j)..limit).step_by(2 * j) {
+                sieve[k] = true;
+            }
+        }
+    }
+
+    for l in 2..limit {
+        if !sieve[l] {
+            sum += l;
+        }
+    }
+
+    sum
 }
