@@ -272,25 +272,22 @@ fn pythagorean_triple(s: u64) -> u64 {
 }
 
 fn sum_primes_below(limit: usize) -> usize {
-    let crosslimit: usize = (limit as f64).sqrt().floor() as usize;
-    let mut sieve: Vec<bool> = vec![false; limit as usize];
-    let mut sum: usize = 0;
+    let sieve_bound = (limit - 1) / 2;
+    let mut sieve: Vec<bool> = vec![false; sieve_bound];
 
-    for i in (4..limit).step_by(2) {
-        sieve[i] = true;
-    }
-
-    for j in (3..=crosslimit).step_by(2) {
-        if !sieve[j] {
-            for k in ((j * j)..limit).step_by(2 * j) {
-                sieve[k] = true;
+    let limit_cross: usize = (((limit as f64).sqrt().floor() - 1.0) / 2.0) as usize;
+    for i in 1..limit_cross {
+        if !sieve[i] {
+            for j in ((2 * i * (i + 1))..sieve_bound).step_by((2 * i) + 1) {
+                sieve[j] = true;
             }
         }
     }
 
-    for l in 2..limit {
-        if !sieve[l] {
-            sum += l;
+    let mut sum: usize = 2;
+    for k in 1..sieve_bound {
+        if !sieve[k] {
+            sum += (2 * k) + 1;
         }
     }
 
