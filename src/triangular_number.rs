@@ -22,6 +22,7 @@ pub fn count_divisors(mut current_dividend: u64) -> u64 {
             current_sqrt = (current_dividend as f64).sqrt() as u64;
 
             n_factors *= power_current + 1;
+            power_current = 0;
         }
         current_try += 2;
     }
@@ -36,16 +37,10 @@ pub fn count_divisors(mut current_dividend: u64) -> u64 {
 pub fn triangular_divisors_n(n_divisors: u64) -> u64 {
     let mut num_current: u64 = 1;
     let mut sum_current: u64 = 0;
-    let mut found = false;
+    let mut found: bool = false;
 
     while !found {
         sum_current += num_current;
-        // println!(
-        //     "{} {} {}",
-        //     num_current,
-        //     sum_current,
-        //     count_divisors(sum_current)
-        // );
 
         if count_divisors(sum_current) > n_divisors {
             found = true;
