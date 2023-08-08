@@ -1,6 +1,7 @@
 mod data;
 
 mod fibonacci;
+mod primes;
 mod sum_multiples;
 mod triangular_number;
 
@@ -14,9 +15,9 @@ fn main() {
     println!("07: {}", get_nth_prime(10001));
     println!("08: {}", largest_product(data::data_08()));
     println!("09: {}", pythagorean_triple(1000));
-    println!("10: {}", sum_primes_below(2000000));
+    println!("10: {}", primes::sum_primes_below(2000000));
     println!("11: {}", largest_product_grid(data::data_11(), 20, 20));
-    println!("12: {}", triangular_number::triangular_divisors_n(500));
+    println!("12: {}", triangular_number::tri_sum_n_divisors(500));
 }
 
 fn largest_prime_factor(mut current_dividend: u64) -> u64 {
@@ -212,29 +213,6 @@ fn pythagorean_triple(s: u64) -> u64 {
         }
     }
     a * b * c
-}
-
-fn sum_primes_below(limit: usize) -> usize {
-    let sieve_bound = (limit - 1) / 2;
-    let mut sieve: Vec<bool> = vec![false; sieve_bound];
-
-    let limit_cross: usize = (((limit as f64).sqrt().floor() - 1.0) / 2.0) as usize;
-    for i in 1..limit_cross {
-        if !sieve[i] {
-            for j in ((2 * i * (i + 1))..sieve_bound).step_by((2 * i) + 1) {
-                sieve[j] = true;
-            }
-        }
-    }
-
-    let mut sum: usize = 2;
-    for k in 1..sieve_bound {
-        if !sieve[k] {
-            sum += (2 * k) + 1;
-        }
-    }
-
-    sum
 }
 
 fn make_2d_row(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
