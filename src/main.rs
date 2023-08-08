@@ -1,9 +1,12 @@
 mod data;
+
+mod fibonacci;
+mod sum_multiples;
 mod triangular_number;
 
 fn main() {
-    println!("01: {}", sum_divisible_by_2(1000, 3, 5));
-    println!("02: {}", fibonacci_sum_even_upto(4000000));
+    println!("01: {}", sum_multiples::sum_divby_2(3, 5, 1000));
+    println!("02: {}", fibonacci::fib_sum_even(4000000));
     println!("03: {}", largest_prime_factor(600851475143));
     println!("04: {}", largest_palindrome_product_3());
     println!("05: {}", smallest_multiple(20));
@@ -14,44 +17,6 @@ fn main() {
     println!("10: {}", sum_primes_below(2000000));
     println!("11: {}", largest_product_grid(data::data_11(), 20, 20));
     println!("12: {}", triangular_number::triangular_divisors_n(500));
-}
-
-fn sum_divisible_by(below: u32, mult: u32) -> u32 {
-    let sequence_end: u32 = (below - 1) / mult;
-
-    mult * (sequence_end * (sequence_end + 1) / 2)
-}
-
-fn sum_divisible_by_2(below: u32, mult_a: u32, mult_b: u32) -> u32 {
-    let sum_a: u32 = sum_divisible_by(below, mult_a);
-    let sum_b: u32 = sum_divisible_by(below, mult_b);
-    let sum_both: u32 = sum_divisible_by(below, mult_a * mult_b);
-
-    sum_a + sum_b - sum_both
-}
-
-fn fibonacci_nth_even(index: u32) -> u32 {
-    if index <= 0 {
-        return 0;
-    }
-    if index == 1 {
-        return 2;
-    }
-
-    4 * fibonacci_nth_even(index - 1) + fibonacci_nth_even(index - 2)
-}
-
-fn fibonacci_sum_even_upto(upto: u32) -> u32 {
-    let mut current_index: u32 = 1;
-    let mut current_term: u32 = 2;
-    let mut current_sum: u32 = 0;
-    while current_term <= upto {
-        current_sum += current_term;
-        current_index += 1;
-        current_term = fibonacci_nth_even(current_index);
-    }
-
-    current_sum
 }
 
 fn largest_prime_factor(mut current_dividend: u64) -> u64 {
