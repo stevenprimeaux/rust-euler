@@ -3,51 +3,21 @@ mod data;
 mod fibonacci;
 mod primes;
 mod sum_multiples;
-mod triangular_number;
+mod triangular;
 
 fn main() {
-    println!("01: {}", sum_multiples::sum_divby_2(3, 5, 1000));
+    println!("01: {}", sum_multiples::sum_mult_2(3, 5, 1000));
     println!("02: {}", fibonacci::fib_sum_even(4000000));
-    println!("03: {}", largest_prime_factor(600851475143));
+    println!("03: {}", primes::prime_fact_max(600851475143));
     println!("04: {}", largest_palindrome_product_3());
     println!("05: {}", smallest_multiple(20));
     println!("06: {}", difference_sum_squares(100));
     println!("07: {}", get_nth_prime(10001));
     println!("08: {}", largest_product(data::data_08()));
     println!("09: {}", pythagorean_triple(1000));
-    println!("10: {}", primes::sum_primes_below(2000000));
+    println!("10: {}", primes::prime_sum(2000000));
     println!("11: {}", largest_product_grid(data::data_11(), 20, 20));
-    println!("12: {}", triangular_number::tri_sum_n_divisors(500));
-}
-
-fn largest_prime_factor(mut current_dividend: u64) -> u64 {
-    let mut current_largest: u64 = 1;
-
-    if current_dividend % 2 == 0 {
-        current_largest = 2;
-        while current_dividend % 2 == 0 {
-            current_dividend /= 2;
-        }
-    }
-
-    let mut current_try: u64 = 3;
-    let mut current_sqrt: u64 = (current_dividend as f64).sqrt() as u64;
-    while current_dividend > 1 && current_try <= current_sqrt {
-        if current_dividend % current_try == 0 {
-            current_largest = current_try;
-            while current_dividend % current_try == 0 {
-                current_dividend /= current_try;
-            }
-            current_sqrt = (current_dividend as f64).sqrt() as u64;
-        }
-        current_try += 2;
-    }
-
-    if current_dividend == 1 {
-        return current_largest;
-    }
-
-    current_dividend
+    println!("12: {}", triangular::tri_sum_n_divisors(500));
 }
 
 fn reverse(mut n_forward: u32) -> u32 {
@@ -95,7 +65,7 @@ fn largest_palindrome_product_3() -> u32 {
 }
 
 fn is_prime(n: u64) -> bool {
-    largest_prime_factor(n) == n
+    primes::prime_fact_max(n) == n
 }
 
 fn get_primes_upto(k: u64) -> Vec<u64> {

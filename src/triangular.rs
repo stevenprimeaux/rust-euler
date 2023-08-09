@@ -54,16 +54,16 @@ use super::primes;
 // }
 
 pub fn tri_sum_n_divisors(n_divisors: u64) -> u64 {
+    let mut n_divisors_current: u64 = 0;
+
     let mut n: u64 = 3;
     let mut n_1: u64;
-
-    let mut n_divisors_current: u64 = 0;
 
     let mut d_n: u64 = 2;
     let mut d_n_1: u64;
     let mut exp: u64;
 
-    let prime_array: Vec<u64> = primes::get_array_primes(65000);
+    let prime_array: Vec<u64> = primes::prime_array(65000);
 
     while n_divisors_current <= n_divisors {
         n += 1;
