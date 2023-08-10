@@ -1,6 +1,7 @@
 mod data;
 
 mod fibonacci;
+mod grid;
 mod primes;
 mod sum_multiples;
 mod triangular;
@@ -16,8 +17,12 @@ fn main() {
     println!("08: {}", largest_product(data::data_08()));
     println!("09: {}", pythagorean_triple(1000));
     println!("10: {}", primes::prime_sum(2000000));
-    println!("11: {}", largest_product_grid(data::data_11(), 20, 20));
+    println!(
+        "11: {}",
+        grid::largest_product_grid(data::data_11(), 20, 20)
+    );
     println!("12: {}", triangular::tri_sum_n_divisors(500));
+    println!("13: {}", grid::grid_sum_rows(data::data_13()));
 }
 
 fn reverse(mut n_forward: u32) -> u32 {
@@ -183,134 +188,4 @@ fn pythagorean_triple(s: u64) -> u64 {
         }
     }
     a * b * c
-}
-
-fn make_2d_row(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array: Vec<Vec<u64>> = vec![vec![0; n_2]; n_1];
-    let mut i_1: usize;
-    let mut i_2: usize;
-    for i in 0..num_vec.len() {
-        i_1 = i / n_1;
-        i_2 = i - (i_1 * 20);
-        num_array[i_1][i_2] = num_vec[i];
-    }
-
-    num_array
-}
-
-fn make_2d_col(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array: Vec<Vec<u64>> = vec![vec![0; n_1]; n_2];
-    let mut i_1: usize;
-    let mut i_2: usize;
-    for i in 0..num_vec.len() {
-        i_1 = i / n_1;
-        i_2 = i - (i_1 * 20);
-        num_array[i_2][i_1] = num_vec[i];
-    }
-
-    num_array
-}
-
-fn make_2d_diag_neg(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_1];
-    let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_2];
-
-    for i in 0..n_1 {
-        let mut current_diag: Vec<u64> = vec![];
-        for j in ((i * n_1)..(num_vec.len())).step_by(n_2 + 1) {
-            current_diag.push(num_vec[j]);
-        }
-        num_array_lower[i] = current_diag;
-    }
-
-    for i in 0..n_2 {
-        let mut current_diag: Vec<u64> = vec![];
-        for j in (i..(num_vec.len() - (i * n_2))).step_by(n_2 + 1) {
-            current_diag.push(num_vec[j]);
-        }
-        num_array_upper[i] = current_diag;
-    }
-
-    let mut num_array_full: Vec<Vec<u64>> = num_array_lower;
-    num_array_full.append(&mut num_array_upper);
-
-    num_array_full
-}
-
-fn make_2d_diag_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_1];
-    let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_2];
-
-    for i in 0..n_1 {
-        let mut current_diag: Vec<u64> = vec![];
-        for j in (i..(((i + 1) * n_1) - 1)).step_by(n_2 - 1) {
-            current_diag.push(num_vec[j]);
-        }
-        num_array_upper[i] = current_diag;
-    }
-
-    for i in 0..n_2 {
-        let mut current_diag: Vec<u64> = vec![];
-        for j in ((n_2 * i + (n_2 - 1))..(num_vec.len())).step_by(n_2 - 1) {
-            current_diag.push(num_vec[j]);
-        }
-        num_array_lower[i] = current_diag;
-    }
-
-    let mut num_array_full: Vec<Vec<u64>> = num_array_upper;
-    num_array_full.append(&mut num_array_lower);
-
-    num_array_full
-}
-
-fn largest_product_array(num_array: Vec<Vec<u64>>, len_window: usize) -> u64 {
-    let mut max_product: u64 = 0;
-    let mut max_product_current: u64;
-    for i in 0..num_array.len() {
-        if num_array[i].len() >= len_window {
-            max_product_current = num_array[i]
-                .windows(len_window)
-                .map(|x: &[u64]| x.iter().product())
-                .max()
-                .unwrap();
-
-            if max_product_current > max_product {
-                max_product = max_product_current;
-            }
-        }
-    }
-
-    max_product
-}
-
-fn get_max_row(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> u64 {
-    largest_product_array(make_2d_row(&num_vec, n_1, n_2), 4)
-}
-
-fn get_max_col(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> u64 {
-    largest_product_array(make_2d_col(&num_vec, n_1, n_2), 4)
-}
-
-fn get_max_diag_neg(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> u64 {
-    largest_product_array(make_2d_diag_neg(&num_vec, n_1, n_2), 4)
-}
-
-fn get_max_diag_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> u64 {
-    largest_product_array(make_2d_diag_pos(&num_vec, n_1, n_2), 4)
-}
-
-fn largest_product_grid(grid: String, n_1: usize, n_2: usize) -> u64 {
-    let num_vec: Vec<u64> = grid
-        .split_whitespace()
-        .map(|s| s.parse().unwrap())
-        .collect::<Vec<u64>>();
-
-    let maxes: [u64; 4] = [
-        get_max_row(&num_vec, n_1, n_2),
-        get_max_col(&num_vec, n_1, n_2),
-        get_max_diag_neg(&num_vec, n_1, n_2),
-        get_max_diag_pos(&num_vec, n_1, n_2),
-    ];
-
-    *maxes.iter().max().unwrap()
 }
