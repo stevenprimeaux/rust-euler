@@ -134,19 +134,43 @@ pub fn grid_to_vec(grid: String) -> Vec<u64> {
         .collect::<Vec<u64>>()
 }
 
-pub fn grid_sum_rows(grid: String) -> u64 {
-    let mut num_array: Vec<Vec<u64>> = make_2d_col(&grid_to_vec(grid), 100, 50);
-    num_array.reverse();
-
-    let mut col_sums: Vec<u64> = vec![0; num_array.len()];
+pub fn grid_cols_sums(grid: String) -> Vec<u64> {
+    let num_array: Vec<Vec<u64>> = make_2d_col(&grid_to_vec(grid), 100, 50);
+    let mut sums: Vec<u64> = vec![0; num_array.len()];
     for (i, el) in num_array.iter().enumerate() {
-        col_sums[i] = el.iter().sum();
-        // println!("{}", col_sums[i]);
+        sums[i] = el.iter().sum();
     }
 
-    /*
+    sums
+}
 
-    */
+pub fn grid_sum_rows(grid: String) -> String {
+    let mut sums_cols: Vec<u64> = grid_cols_sums(grid);
+    let mut overflow: bool = true;
+    sums_cols.reverse();
 
-    num_array.len() as u64
+    let mut current: u64;
+    while overflow == true {
+        overflow = false;
+        for i in 0..(sums_cols.len()) {
+            current = sums_cols[i];
+            if current >= 10 {
+                if i == (sums_cols.len() - 1) {
+                    sums_cols.push(0);
+                }
+                sums_cols[i] = current % 10;
+                sums_cols[i + 1] += current / 10;
+
+                overflow = true;
+            }
+        }
+    }
+
+    let mut digits: String = String::from("");
+
+    for i in ((sums_cols.len() - 10)..(sums_cols.len())).rev() {
+        digits.push_str(&sums_cols[i].to_string());
+    }
+
+    digits
 }
