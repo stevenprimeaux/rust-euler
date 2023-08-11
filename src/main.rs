@@ -2,15 +2,16 @@ mod data;
 
 mod fibonacci;
 mod grid;
+mod multiples;
+mod palindrome;
 mod primes;
-mod sum_multiples;
 mod triangular;
 
 fn main() {
-    println!("01: {}", sum_multiples::sum_mult_2(3, 5, 1000));
+    println!("01: {}", multiples::mult_sum_2(3, 5, 1000));
     println!("02: {}", fibonacci::fib_sum_even(4000000));
     println!("03: {}", primes::prime_fact_max(600851475143));
-    println!("04: {}", largest_palindrome_product_3());
+    println!("04: {}", palindrome::pal_product_3());
     println!("05: {}", smallest_multiple(20));
     println!("06: {}", difference_sum_squares(100));
     println!("07: {}", get_nth_prime(10001));
@@ -23,50 +24,6 @@ fn main() {
     );
     println!("12: {}", triangular::tri_sum_n_divisors(500));
     println!("13: {}", grid::grid_sum_rows(data::data_13()));
-}
-
-fn reverse(mut n_forward: u32) -> u32 {
-    let mut n_backward: u32 = 0;
-    while n_forward > 0 {
-        n_backward = (10 * n_backward) + (n_forward % 10);
-        n_forward /= 10;
-    }
-
-    n_backward
-}
-
-fn is_palindrome(n: u32) -> bool {
-    n == reverse(n)
-}
-
-fn largest_palindrome_product_3() -> u32 {
-    let mut current_largest: u32 = 0;
-    let mut factor_a: u32 = 990;
-    let mut factor_b: u32;
-    let mut decrement_b: u32;
-
-    while factor_a >= 100 {
-        if factor_a % 11 == 0 {
-            factor_b = 999;
-            decrement_b = 1;
-        } else {
-            factor_b = 990;
-            decrement_b = 11;
-        }
-
-        while factor_b >= factor_a {
-            if factor_a * factor_b <= current_largest {
-                break;
-            }
-            if is_palindrome(factor_a * factor_b) {
-                current_largest = factor_a * factor_b;
-            }
-            factor_b -= decrement_b;
-        }
-        factor_a -= 1;
-    }
-
-    current_largest
 }
 
 fn is_prime(n: u64) -> bool {

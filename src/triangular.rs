@@ -1,4 +1,4 @@
-use super::primes;
+use crate::primes;
 
 // pub fn count_divisors(mut current_dividend: u64) -> u64 {
 //     let mut n_factors: u64 = 1;
