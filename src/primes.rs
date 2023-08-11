@@ -77,3 +77,7 @@ pub fn prime_fact_max(mut current_dividend: u64) -> u64 {
 
     current_dividend
 }
+
+pub fn is_prime(n: u64) -> bool {
+    prime_fact_max(n) == n
+}

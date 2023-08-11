@@ -12,7 +12,7 @@ fn main() {
     println!("02: {}", fibonacci::fib_sum_even(4000000));
     println!("03: {}", primes::prime_fact_max(600851475143));
     println!("04: {}", palindrome::pal_product_3());
-    println!("05: {}", smallest_multiple(20));
+    println!("05: {}", multiples::mult_smallest(20));
     println!("06: {}", difference_sum_squares(100));
     println!("07: {}", get_nth_prime(10001));
     println!("08: {}", largest_product(data::data_08()));
@@ -24,44 +24,6 @@ fn main() {
     );
     println!("12: {}", triangular::tri_sum_n_divisors(500));
     println!("13: {}", grid::grid_sum_rows(data::data_13()));
-}
-
-fn is_prime(n: u64) -> bool {
-    primes::prime_fact_max(n) == n
-}
-
-fn get_primes_upto(k: u64) -> Vec<u64> {
-    let mut primes: Vec<u64> = vec![2];
-    let mut current_try: u64 = 3;
-    while current_try <= k {
-        if is_prime(current_try) {
-            primes.push(current_try);
-        }
-        current_try += 2;
-    }
-
-    primes
-}
-
-fn smallest_multiple(k: u64) -> u64 {
-    let primes: Vec<u64> = get_primes_upto(k);
-    let mut prime_powers: Vec<u32> = vec![1; primes.len()];
-    let mut mult: u64 = 1;
-
-    let k: f64 = k as f64;
-    let log_k: f64 = k.log(1_f64.exp());
-    let limit: u64 = k.sqrt().floor() as u64;
-
-    let mut log_p: f64;
-    for i in 0..primes.len() {
-        if primes[i] <= limit {
-            log_p = (primes[i] as f64).log(1_f64.exp());
-            prime_powers[i] = (log_k / log_p).floor() as u32;
-        }
-        mult *= primes[i].pow(prime_powers[i]);
-    }
-
-    mult
 }
 
 fn difference_sum_squares(n_terms: u32) -> u32 {
@@ -77,7 +39,7 @@ fn get_nth_prime(n: u64) -> u64 {
 
     while n_primes_current < n {
         current_try += 2;
-        if is_prime(current_try) {
+        if primes::is_prime(current_try) {
             n_primes_current += 1;
         }
     }
