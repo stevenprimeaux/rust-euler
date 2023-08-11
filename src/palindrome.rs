@@ -1,15 +1,7 @@
-pub fn reverse(mut n: u32) -> u32 {
-    let mut n_rev: u32 = 0;
-    while n > 0 {
-        n_rev = (10 * n_rev) + (n % 10);
-        n /= 10;
-    }
-
-    n_rev
-}
+use crate::util;
 
 pub fn is_palindrome(n: u32) -> bool {
-    n == reverse(n)
+    n == util::reverse(n)
 }
 
 pub fn pal_product_3() -> u32 {
@@ -31,6 +23,7 @@ pub fn pal_product_3() -> u32 {
             if fact_1 * fact_2 <= max_current {
                 break;
             }
+            
             if is_palindrome(fact_1 * fact_2) {
                 max_current = fact_1 * fact_2;
             }

@@ -1,5 +1,49 @@
 use crate::primes;
 
+pub fn tri_sum(n_div: u64) -> u64 {
+    let mut n_div_current: u64 = 0;
+
+    let mut n: u64 = 3;
+    let mut n_1: u64;
+
+    let mut d_n: u64 = 2;
+    let mut d_n_1: u64;
+    let mut exp: u64;
+
+    let primes: Vec<u64> = primes::prime_array(65000);
+
+    while n_div_current <= n_div {
+        n += 1;
+        n_1 = n;
+        if n_1 % 2 == 0 {
+            n_1 /= 2
+        }
+        d_n_1 = 1;
+        for i in 0..(primes.len() - 1) {
+            if primes[i] * primes[i] > n_1 {
+                d_n_1 *= 2;
+                break;
+            }
+
+            exp = 1;
+            while n_1 % primes[i] == 0 {
+                exp += 1;
+                n_1 /= primes[i];
+            }
+            if exp > 1 {
+                d_n_1 *= exp;
+            }
+            if n_1 == 1 {
+                break;
+            }
+        }
+        n_div_current = d_n * d_n_1;
+        d_n = d_n_1;
+    }
+
+    n * (n - 1) / 2
+}
+
 // pub fn count_divisors(mut current_dividend: u64) -> u64 {
 //     let mut n_factors: u64 = 1;
 
@@ -52,47 +96,3 @@ use crate::primes;
 
 //     sum_current
 // }
-
-pub fn tri_sum_n_divisors(n_divisors: u64) -> u64 {
-    let mut n_divisors_current: u64 = 0;
-
-    let mut n: u64 = 3;
-    let mut n_1: u64;
-
-    let mut d_n: u64 = 2;
-    let mut d_n_1: u64;
-    let mut exp: u64;
-
-    let prime_array: Vec<u64> = primes::prime_array(65000);
-
-    while n_divisors_current <= n_divisors {
-        n += 1;
-        n_1 = n;
-        if n_1 % 2 == 0 {
-            n_1 /= 2
-        }
-        d_n_1 = 1;
-        for i in 0..(prime_array.len() - 1) {
-            if prime_array[i] * prime_array[i] > n_1 {
-                d_n_1 *= 2;
-                break;
-            }
-
-            exp = 1;
-            while n_1 % prime_array[i] == 0 {
-                exp += 1;
-                n_1 /= prime_array[i];
-            }
-            if exp > 1 {
-                d_n_1 *= exp;
-            }
-            if n_1 == 1 {
-                break;
-            }
-        }
-        n_divisors_current = d_n * d_n_1;
-        d_n = d_n_1;
-    }
-
-    n * (n - 1) / 2
-}

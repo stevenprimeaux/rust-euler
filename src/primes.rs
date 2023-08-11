@@ -36,6 +36,20 @@ pub fn prime_array(limit: usize) -> Vec<u64> {
     array_primes
 }
 
+pub fn prime_nth(n: usize) -> u64 {
+    let mut n_current: usize = 1;
+    let mut try_current: u64 = 1;
+
+    while n_current < n {
+        try_current += 2;
+        if is_prime(try_current) {
+            n_current += 1;
+        }
+    }
+
+    try_current
+}
+
 pub fn prime_sum(limit: usize) -> u64 {
     let sieve: Vec<bool> = prime_sieve(limit);
     let mut sum: u64 = 2;
