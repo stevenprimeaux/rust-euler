@@ -1,3 +1,4 @@
+mod collatz;
 mod data;
 mod fibonacci;
 mod grid;
@@ -25,4 +26,5 @@ fn main() {
     println!("11: {}", grid::grid_prod_max_alldir(data_11(), 20, 20, 4));
     println!("12: {}", triangular::tri_sum(500));
     println!("13: {}", grid::grid_sum_rows(data_13()));
+    println!("14: {}", collatz::collatz_try(999999));
 }

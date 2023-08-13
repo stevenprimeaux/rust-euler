@@ -13,7 +13,7 @@ pub fn fib_sum_even(limit: u32) -> u32 {
     let mut current_index: usize = 1;
     let mut current_term: u32 = 2;
     let mut current_sum: u32 = 0;
-    
+
     while current_term <= limit {
         current_sum += current_term;
         current_index += 1;

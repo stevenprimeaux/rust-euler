@@ -23,7 +23,7 @@ pub fn pal_product_3() -> u32 {
             if fact_1 * fact_2 <= max_current {
                 break;
             }
-            
+
             if is_palindrome(fact_1 * fact_2) {
                 max_current = fact_1 * fact_2;
             }
