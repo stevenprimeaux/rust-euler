@@ -4,6 +4,7 @@ mod fibonacci;
 mod grid;
 mod multiples;
 mod palindrome;
+mod paths;
 mod primes;
 mod pythagorean;
 mod squares;
@@ -27,4 +28,5 @@ fn main() {
     println!("12: {}", triangular::tri_sum(500));
     println!("13: {}", grid::grid_sum_rows(data_13()));
     println!("14: {}", collatz::collatz_try(999999));
+    println!("15: {}", paths::path_count(20));
 }
