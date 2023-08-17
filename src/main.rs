@@ -2,6 +2,7 @@ mod collatz;
 mod data;
 mod fibonacci;
 mod grid;
+mod letters;
 mod multiples;
 mod overflow;
 mod palindrome;
@@ -31,4 +32,5 @@ fn main() {
     println!("14: {}", collatz::collatz_try(999999));
     println!("15: {}", paths::path_count(20));
     println!("16: {}", overflow::oflow_pow(2, 1000));
+    println!("17: {}", letters::letters_count_chars_cum(1000));
 }
