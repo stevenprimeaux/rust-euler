@@ -1,19 +1,8 @@
-mod collatz;
 mod data;
-mod fibonacci;
-mod grid;
-mod letters;
-mod multiples;
-mod overflow;
-mod palindrome;
-mod paths;
-mod primes;
-mod pythagorean;
-mod squares;
-mod triangular;
-mod util;
+mod euler;
 
 use crate::data::*;
+use crate::euler::*;
 
 fn main() {
     println!("01: {}", multiples::mult_sum_2(3, 5, 1000));
@@ -33,4 +22,5 @@ fn main() {
     println!("15: {}", paths::path_count(20));
     println!("16: {}", overflow::oflow_pow(2, 1000));
     println!("17: {}", letters::letters_count_chars_cum(1000));
+    println!("18: {}", paths::path_sum_tri(data_18()));
 }
