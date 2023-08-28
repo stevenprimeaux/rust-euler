@@ -2,7 +2,6 @@ use rust_euler::data::*;
 use rust_euler::euler::*;
 
 fn main() {
-    println!("02: {}", fibonacci::fib_sum_even(4000000));
     println!("03: {}", primes::prime_fact_max(600851475143));
     println!("04: {}", palindrome::pal_product_3());
     println!("05: {}", multiples::mult_smallest(20));

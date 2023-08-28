@@ -22,3 +22,18 @@ pub fn fib_sum_even(limit: u32) -> u32 {
 
     current_sum
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::euler::fibonacci;
+
+    #[test]
+    fn test_fib_n_even() {
+        assert_eq!(fibonacci::fib_n_even(3), 34);
+    }
+
+    #[test]
+    fn test_fib_sum_even() {
+        assert_eq!(fibonacci::fib_sum_even(4000000), 4613732);
+    }
+}
