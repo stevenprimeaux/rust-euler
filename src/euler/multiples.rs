@@ -1,9 +1,9 @@
 use crate::primes;
 
 pub fn mult_sum(mult: u32, limit: u32) -> u32 {
-    let sequence_end: u32 = (limit - 1) / mult;
+    let n: u32 = (limit - 1) / mult;
 
-    mult * (sequence_end * (sequence_end + 1) / 2)
+    mult * (n * (n + 1) / 2)
 }
 
 pub fn mult_sum_2(mult_1: u32, mult_2: u32, limit: u32) -> u32 {
@@ -33,4 +33,26 @@ pub fn mult_smallest(k: u64) -> u64 {
     }
 
     mult
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::multiples;
+
+    #[test]
+    fn test_mult_sum() {
+        assert_eq!(multiples::mult_sum(3, 10), 18);
+    }
+
+    #[test]
+    fn test_mult_sum_2() {
+        assert_eq!(multiples::mult_sum_2(3, 5, 10), 23);
+        assert_eq!(multiples::mult_sum_2(3, 5, 1000), 233168);
+    }
+
+    #[test]
+    fn test_mult_smallest() {
+        assert_eq!(multiples::mult_smallest(10), 2520);
+        assert_eq!(multiples::mult_smallest(20), 1654052400);
+    }
 }
