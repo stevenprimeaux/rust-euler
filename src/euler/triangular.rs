@@ -1,5 +1,5 @@
-use crate::primes;
-use crate::util;
+use crate::euler::primes;
+use crate::euler::util;
 
 pub fn tri_sum(n_div: u64) -> u64 {
     let mut n_div_current: u64 = 0;

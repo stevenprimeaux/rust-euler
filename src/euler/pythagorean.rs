@@ -1,4 +1,4 @@
-use crate::util;
+use crate::euler::util;
 
 pub fn pythag_triple(s: u64) -> u64 {
     let s_2: u64 = s / 2;

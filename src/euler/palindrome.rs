@@ -1,4 +1,4 @@
-use crate::util;
+use crate::euler::util;
 
 pub fn is_palindrome(n: u32) -> bool {
     n == util::reverse(n)

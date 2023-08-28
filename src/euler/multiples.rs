@@ -1,4 +1,4 @@
-use crate::primes;
+use crate::euler::primes;
 
 pub fn mult_sum(mult: u32, limit: u32) -> u32 {
     let n: u32 = (limit - 1) / mult;
@@ -37,7 +37,7 @@ pub fn mult_smallest(k: u64) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::multiples;
+    use crate::euler::multiples;
 
     #[test]
     fn test_mult_sum() {

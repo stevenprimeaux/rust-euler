@@ -1,11 +1,7 @@
-mod data;
-mod euler;
-
-use crate::data::*;
-use crate::euler::*;
+use rust_euler::data::*;
+use rust_euler::euler::*;
 
 fn main() {
-    println!("01: {}", multiples::mult_sum_2(3, 5, 1000));
     println!("02: {}", fibonacci::fib_sum_even(4000000));
     println!("03: {}", primes::prime_fact_max(600851475143));
     println!("04: {}", palindrome::pal_product_3());
