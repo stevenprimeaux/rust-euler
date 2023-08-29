@@ -95,3 +95,26 @@ pub fn prime_fact_max(mut current_dividend: u64) -> u64 {
 pub fn is_prime(n: u64) -> bool {
     prime_fact_max(n) == n
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::euler::primes;
+
+    #[test]
+    fn test_prime_nth() {
+        assert_eq!(primes::prime_nth(6), 13);
+        assert_eq!(primes::prime_nth(10001), 104743);
+    }
+
+    #[test]
+    fn test_prime_sum() {
+        assert_eq!(primes::prime_sum(10), 17);
+        assert_eq!(primes::prime_sum(2000000), 142913828922);
+    }
+
+    #[test]
+    fn test_prime_fact_max() {
+        assert_eq!(primes::prime_fact_max(13195), 29);
+        assert_eq!(primes::prime_fact_max(600851475143), 6857);
+    }
+}
