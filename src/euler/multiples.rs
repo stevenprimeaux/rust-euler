@@ -37,22 +37,23 @@ pub fn mult_smallest(k: u64) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::euler::multiples;
+    use super::*;
 
     #[test]
     fn test_mult_sum() {
-        assert_eq!(multiples::mult_sum(3, 10), 18);
+        assert_eq!(mult_sum(3, 10), 18);
+        assert_eq!(mult_sum(5, 10), 5);
     }
 
     #[test]
     fn test_mult_sum_2() {
-        assert_eq!(multiples::mult_sum_2(3, 5, 10), 23);
-        assert_eq!(multiples::mult_sum_2(3, 5, 1000), 233168);
+        assert_eq!(mult_sum_2(3, 5, 10), 23);
+        assert_eq!(mult_sum_2(3, 5, 1000), 233168);
     }
 
     #[test]
     fn test_mult_smallest() {
-        assert_eq!(multiples::mult_smallest(10), 2520);
-        assert_eq!(multiples::mult_smallest(20), 1654052400);
+        assert_eq!(mult_smallest(10), 2520);
+        assert_eq!(mult_smallest(20), 1654052400);
     }
 }

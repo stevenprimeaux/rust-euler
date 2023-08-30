@@ -1,4 +1,4 @@
-pub fn fib_n_even(n: usize) -> u32 {
+pub fn fib_nth_even(n: usize) -> u32 {
     if n <= 0 {
         return 0;
     }
@@ -6,7 +6,7 @@ pub fn fib_n_even(n: usize) -> u32 {
         return 2;
     }
 
-    4 * fib_n_even(n - 1) + fib_n_even(n - 2)
+    4 * fib_nth_even(n - 1) + fib_nth_even(n - 2)
 }
 
 pub fn fib_sum_even(limit: u32) -> u32 {
@@ -17,7 +17,7 @@ pub fn fib_sum_even(limit: u32) -> u32 {
     while term <= limit {
         sum += term;
         index += 1;
-        term = fib_n_even(index);
+        term = fib_nth_even(index);
     }
 
     sum
@@ -25,15 +25,15 @@ pub fn fib_sum_even(limit: u32) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::euler::fibonacci;
+    use super::*;
 
     #[test]
     fn test_fib_n_even() {
-        assert_eq!(fibonacci::fib_n_even(3), 34);
+        assert_eq!(fib_nth_even(3), 34);
     }
 
     #[test]
     fn test_fib_sum_even() {
-        assert_eq!(fibonacci::fib_sum_even(4000000), 4613732);
+        assert_eq!(fib_sum_even(4000000), 4613732);
     }
 }
