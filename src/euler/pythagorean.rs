@@ -44,3 +44,14 @@ pub fn pythag_triple(s: u64) -> u64 {
     }
     a * b * c
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_pythag_triple() {
+        assert_eq!(pythag_triple(12), 60);
+        assert_eq!(pythag_triple(1000), 31875000);
+    }
+}
