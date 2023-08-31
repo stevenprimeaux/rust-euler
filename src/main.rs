@@ -2,8 +2,6 @@ use rust_euler::data::*;
 use rust_euler::euler::*;
 
 fn main() {
-    println!("04: {}", palindrome::pal_product_3());
-    println!("05: {}", multiples::mult_smallest(20));
     println!("06: {}", squares::sq_diff(100));
     println!("08: {}", grid::grid_prod_max_rowwise(data_08(), 13));
     println!("09: {}", pythagorean::pythag_triple(1000));

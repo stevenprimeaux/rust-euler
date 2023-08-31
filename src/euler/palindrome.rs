@@ -1,9 +1,5 @@
 use crate::euler::util;
 
-pub fn is_palindrome(n: u32) -> bool {
-    n == util::reverse(n)
-}
-
 pub fn pal_product_3() -> u32 {
     let mut max_current: u32 = 0;
     let mut fact_1: u32 = 990;
@@ -33,4 +29,24 @@ pub fn pal_product_3() -> u32 {
     }
 
     max_current
+}
+
+pub fn is_palindrome(n: u32) -> bool {
+    n == util::reverse(n)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_pal_product_3() {
+        assert_eq!(pal_product_3(), 906609);
+    }
+
+    #[test]
+    fn test_is_palindrome() {
+        assert_eq!(is_palindrome(123456), false);
+        assert_eq!(is_palindrome(123321), true);
+    }
 }

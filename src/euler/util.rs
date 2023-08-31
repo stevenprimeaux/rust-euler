@@ -60,3 +60,14 @@ pub fn count_divisors(mut current_dividend: u64) -> u64 {
 
     n_factors
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_reverse() {
+        assert_eq!(reverse(123456), 654321);
+        assert_eq!(reverse(123321), 123321);
+    }
+}
