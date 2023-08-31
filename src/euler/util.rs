@@ -16,10 +16,6 @@ pub fn reverse(mut n: u32) -> u32 {
     n_rev
 }
 
-pub fn sum_squares(n_terms: u32) -> u32 {
-    (2 * n_terms + 1) * (n_terms + 1) * n_terms / 6
-}
-
 pub fn sum_terms(n_terms: u32) -> u32 {
     n_terms * (n_terms + 1) / 2
 }

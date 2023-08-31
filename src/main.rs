@@ -2,7 +2,6 @@ use rust_euler::data::*;
 use rust_euler::euler::*;
 
 fn main() {
-    println!("06: {}", squares::sq_diff(100));
     println!("08: {}", grid::grid_prod_max_rowwise(data_08(), 13));
     println!("09: {}", pythagorean::pythag_triple(1000));
     println!("11: {}", grid::grid_prod_max_alldir(data_11(), 20, 20, 4));
