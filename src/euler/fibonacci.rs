@@ -28,7 +28,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_fib_n_even() {
+    fn test_fib_nth_even() {
         assert_eq!(fib_nth_even(3), 34);
     }
 
