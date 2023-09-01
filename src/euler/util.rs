@@ -20,7 +20,6 @@ pub fn sum_terms(n_terms: u32) -> u32 {
     n_terms * (n_terms + 1) / 2
 }
 
-#[allow(dead_code)]
 pub fn count_divisors(mut current_dividend: u64) -> u64 {
     let mut n_factors: u64 = 1;
 

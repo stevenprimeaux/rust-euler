@@ -45,7 +45,6 @@ pub fn tri_sum(n_div: u64) -> u64 {
     n * (n - 1) / 2
 }
 
-#[allow(dead_code)]
 pub fn tri_sum_brute(n_div: u64) -> u64 {
     let mut num_current: u64 = 1;
     let mut sum_current: u64 = 0;
@@ -61,4 +60,21 @@ pub fn tri_sum_brute(n_div: u64) -> u64 {
     }
 
     sum_current
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_tri_sum() {
+        assert_eq!(tri_sum(5), 28);
+        assert_eq!(tri_sum(500), 76576500);
+    }
+
+    #[test]
+    fn test_tri_sum_brute() {
+        assert_eq!(tri_sum_brute(5), 28);
+        assert_eq!(tri_sum_brute(500), 76576500);
+    }
 }
