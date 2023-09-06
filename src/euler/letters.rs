@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn letters_count_chars(phrase: &str) -> usize {
-    phrase.replace(" ", "").chars().count()
+    phrase.replace("-", "").replace(" ", "").chars().count()
 }
 
 pub fn letters_count_words(mut n_current: u32) -> HashMap<u32, usize> {
@@ -118,4 +118,18 @@ pub fn letters_sub_ones() -> Vec<(&'static str, &'static str)> {
         ("8", "eight"),
         ("9", "nine"),
     ]
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_letters_count_chars() {
+        assert_eq!(letters_count_chars("one"), 3);
+        assert_eq!(letters_count_chars("two"), 3);
+        assert_eq!(letters_count_chars("three"), 5);
+        assert_eq!(letters_count_chars("three hundred and forty-two"), 23);
+        assert_eq!(letters_count_chars("one hundred and fifteen"), 20);
+    }
 }
