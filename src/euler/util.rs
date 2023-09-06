@@ -65,4 +65,12 @@ mod tests {
         assert_eq!(reverse(123456), 654321);
         assert_eq!(reverse(123321), 123321);
     }
+
+    #[test]
+    fn test_gcd() {
+        assert_eq!(gcd(8, 12), 4);
+        assert_eq!(gcd(9, 28), 1);
+        assert_eq!(gcd(18, 48), 6);
+        assert_eq!(gcd(24, 54), 6);
+    }
 }
