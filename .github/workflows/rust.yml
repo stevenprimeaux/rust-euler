@@ -26,11 +26,13 @@ jobs:
           ~/.cargo/registry/cache/
           ~/.cargo/registry/index/
         key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
+
+    - name: install
+      run: cargo install --quiet cargo-tarpaulin
+      continue-on-error: true
     
     - name: test
-      run: |
-        cargo install --quiet cargo-tarpaulin
-        cargo tarpaulin --out Xml
+      run: cargo tarpaulin --out Xml
     
     - name: codecov
       uses: codecov/codecov-action@v3
