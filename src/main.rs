@@ -1,6 +1,7 @@
 use rust_euler::data::*;
 use rust_euler::euler::*;
 
+#[cfg(not(tarpaulin_include))]
 fn main() {
     println!("08: {}", grid::grid_prod_max_rowwise(data_08(), 13));
     println!("11: {}", grid::grid_prod_max_alldir(data_11(), 20, 20, 4));

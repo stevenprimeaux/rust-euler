@@ -1,35 +1,8 @@
+use crate::euler::util;
 use std::collections::HashMap;
 
-pub fn letters_count_chars(phrase: &str) -> usize {
-    phrase.replace("-", "").replace(" ", "").chars().count()
-}
-
-pub fn letters_count_words(mut n_current: u32) -> HashMap<u32, usize> {
-    let mut words_count: HashMap<u32, usize> =
-        HashMap::from([(1000, 0), (100, 0), (10, 0), (1, 0)]);
-
-    if n_current >= 1000 {
-        *words_count.get_mut(&1000).unwrap() = (n_current as usize) / 1000;
-        n_current %= 1000;
-    }
-
-    if n_current >= 100 {
-        *words_count.get_mut(&100).unwrap() = (n_current as usize) / 100;
-        n_current %= 100;
-    }
-
-    if n_current >= 10 {
-        *words_count.get_mut(&10).unwrap() = (n_current as usize) / 10;
-        n_current %= 10;
-    }
-
-    *words_count.get_mut(&1).unwrap() = n_current as usize;
-
-    words_count
-}
-
 pub fn letters_build_phrase(n: u32) -> String {
-    let counts: HashMap<u32, usize> = letters_count_words(n);
+    let counts: HashMap<u32, usize> = util::counts_base_10(n);
     let mut phrase: String = String::from("");
 
     if counts[&1000] >= 1 {
@@ -66,6 +39,10 @@ pub fn letters_build_phrase(n: u32) -> String {
     phrase
 }
 
+pub fn letters_count_chars(phrase: &str) -> usize {
+    phrase.replace("-", "").replace(" ", "").chars().count()
+}
+
 pub fn letters_count_chars_cum(limit: u32) -> usize {
     let mut sum: usize = 0;
     let mut count: usize;
@@ -79,6 +56,7 @@ pub fn letters_count_chars_cum(limit: u32) -> usize {
     sum
 }
 
+#[cfg(not(tarpaulin_include))]
 pub fn letters_sub_teens() -> Vec<(&'static str, &'static str)> {
     vec![
         ("1 ten, 1", "eleven"),
@@ -93,6 +71,7 @@ pub fn letters_sub_teens() -> Vec<(&'static str, &'static str)> {
     ]
 }
 
+#[cfg(not(tarpaulin_include))]
 pub fn letters_sub_tens() -> Vec<(&'static str, &'static str)> {
     vec![
         ("2 ten", "twenty"),
@@ -106,6 +85,7 @@ pub fn letters_sub_tens() -> Vec<(&'static str, &'static str)> {
     ]
 }
 
+#[cfg(not(tarpaulin_include))]
 pub fn letters_sub_ones() -> Vec<(&'static str, &'static str)> {
     vec![
         ("1", "one"),
@@ -125,11 +105,25 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_letters_build_phrase() {
+        assert_eq!(letters_build_phrase(1), "one");
+        assert_eq!(letters_build_phrase(12), "twelve");
+        assert_eq!(letters_build_phrase(123), "one hundred and twenty three");
+        assert_eq!(
+            letters_build_phrase(1234),
+            "one thousand two hundred and thirty four"
+        );
+    }
+
+    #[test]
     fn test_letters_count_chars() {
-        assert_eq!(letters_count_chars("one"), 3);
-        assert_eq!(letters_count_chars("two"), 3);
-        assert_eq!(letters_count_chars("three"), 5);
-        assert_eq!(letters_count_chars("three hundred and forty-two"), 23);
         assert_eq!(letters_count_chars("one hundred and fifteen"), 20);
+        assert_eq!(letters_count_chars("three hundred and forty-two"), 23);
+    }
+
+    #[test]
+    fn test_letters_count_chars_cum() {
+        assert_eq!(letters_count_chars_cum(5), 19);
+        assert_eq!(letters_count_chars_cum(1000), 21124);
     }
 }
