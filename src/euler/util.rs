@@ -83,14 +83,34 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_reverse() {
-        assert_eq!(reverse(123456), 654321);
-        assert_eq!(reverse(123321), 123321);
+    fn test_counts_base_10() {
+        assert_eq!(
+            counts_base_10(3),
+            HashMap::from([(1000, 0), (100, 0), (10, 0), (1, 3)])
+        );
+        assert_eq!(
+            counts_base_10(33),
+            HashMap::from([(1000, 0), (100, 0), (10, 3), (1, 3)])
+        );
+        assert_eq!(
+            counts_base_10(333),
+            HashMap::from([(1000, 0), (100, 3), (10, 3), (1, 3)])
+        );
+        assert_eq!(
+            counts_base_10(3333),
+            HashMap::from([(1000, 3), (100, 3), (10, 3), (1, 3)])
+        );
     }
 
     #[test]
     fn test_gcd() {
         assert_eq!(gcd(8, 12), 4);
         assert_eq!(gcd(9, 28), 1);
+    }
+
+    #[test]
+    fn test_reverse() {
+        assert_eq!(reverse(123456), 654321);
+        assert_eq!(reverse(123321), 123321);
     }
 }
