@@ -1,3 +1,4 @@
+pub mod calendar;
 pub mod collatz;
 pub mod fibonacci;
 pub mod grid;
