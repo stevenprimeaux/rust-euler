@@ -10,4 +10,5 @@ fn main() {
     // println!("16: {}", overflow::oflow_pow(2, 1000));
     // println!("18: {}", paths::path_sum_tri(data_18()));
     println!("19: {}", calendar::cal_count_sundays(1901, 2000, 2));
+    println!("20: {}", overflow::oflow_factorial(100));
 }
