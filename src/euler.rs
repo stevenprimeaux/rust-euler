@@ -1,5 +1,7 @@
+pub mod amicable;
 pub mod calendar;
 pub mod collatz;
+pub mod divisors;
 pub mod fibonacci;
 pub mod grid;
 pub mod letters;

@@ -21,7 +21,6 @@ pub fn oflow_fix(digits_vec: &mut Vec<u32>) {
 
 pub fn oflow_factorial(n: u32) -> u32 {
     let mut digits_vec: Vec<u32> = vec![1];
-    let mut digits_sum: u32 = 0;
 
     for n_current in 1..=n {
         for i in 0..digits_vec.len() {
@@ -31,16 +30,11 @@ pub fn oflow_factorial(n: u32) -> u32 {
         oflow_fix(&mut digits_vec);
     }
 
-    for d in digits_vec {
-        digits_sum += d;
-    }
-
-    digits_sum
+    digits_vec.iter().sum()
 }
 
 pub fn oflow_pow(base: u32, pow: u32) -> u32 {
     let mut digits_vec: Vec<u32> = vec![base];
-    let mut digits_sum: u32 = 0;
 
     for _ in 2..=pow {
         for i in 0..digits_vec.len() {
@@ -50,11 +44,7 @@ pub fn oflow_pow(base: u32, pow: u32) -> u32 {
         oflow_fix(&mut digits_vec);
     }
 
-    for d in digits_vec {
-        digits_sum += d;
-    }
-
-    digits_sum
+    digits_vec.iter().sum()
 }
 
 #[cfg(test)]
