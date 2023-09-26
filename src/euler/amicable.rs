@@ -1,22 +1,35 @@
-use super::divisors::divs_get_prime;
+use super::divisors;
 
-pub fn am_sum(start: u64, limit: u64) -> u64 {
-    let mut sum = 0;
-    
+pub fn ami_sum(limit: u64) -> u64 {
+    let mut sum: u64 = 0;
 
-    for a in start..limit {
-        let b = divs_get_prime(a)
+    for a in 2..limit {
+        let b: u64 = divisors::divs_all(a)
             .iter()
-            .filter(|x| x != &&a)
+            .filter(|x: &&u64| x != &&a)
             .sum();
 
         if a != b && b < limit {
-            if a == divs_get_prime(b).iter().filter(|x| x != &&b).sum() {
-                println!("{} {}", a, b);
+            if a == divisors::divs_all(b)
+                .iter()
+                .filter(|x: &&u64| x != &&b)
+                .sum()
+            {
                 sum += a + b;
             }
         }
     }
 
     sum / 2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ami_sum() {
+        assert_eq!(ami_sum(300), 504);
+        assert_eq!(ami_sum(10000), 31626);
+    }
 }

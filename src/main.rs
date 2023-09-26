@@ -1,5 +1,5 @@
-// use rust_euler::data::*;
 use rust_euler::euler::*;
+// use rust_euler::data::*;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
@@ -11,5 +11,5 @@ fn main() {
     // println!("19: {}", calendar::cal_count_sundays(1901, 2000, 2));
     // println!("20: {}", overflow::oflow_factorial(100));
 
-    println!("21: {}", amicable::am_sum(2, 10000));
+    println!("21: {}", amicable::ami_sum(10000));
 }
