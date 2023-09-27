@@ -54,6 +54,8 @@ pub fn grid_diags_neg(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64
         num_array_upper[i] = current_diag;
     }
 
+    num_array_lower.reverse();
+
     let mut num_array_full: Vec<Vec<u64>> = num_array_lower;
     num_array_full.append(&mut num_array_upper);
 
@@ -74,7 +76,7 @@ pub fn grid_diags_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64
 
     for i in 0..n_2 {
         let mut current_diag: Vec<u64> = vec![];
-        for j in ((n_2 * i + (n_2 - 1))..(num_vec.len())).step_by(n_2 - 1) {
+        for j in ((n_2 * i + (n_2 - 1))..((num_vec.len() - n_2) + 1 + i)).step_by(n_2 - 1) {
             current_diag.push(num_vec[j]);
         }
         num_array_lower[i] = current_diag;
@@ -191,27 +193,61 @@ mod tests {
 
     #[test]
     fn test_grid_rows() {
-        assert_eq!(grid_rows(&vec![1, 2, 3, 4], 2, 2), vec![[1, 2], [3, 4]])
+        assert_eq!(grid_rows(&vec![0, 1, 2, 3], 2, 2), [[0, 1], [2, 3]]);
+        // assert_eq!(
+        //     grid_rows(&vec![0, 1, 2, 3, 4, 5], 3, 2),
+        //     [[0, 1], [2, 3], [4, 5]]
+        // );
     }
 
     #[test]
     fn test_grid_cols() {
-        assert_eq!(grid_cols(&vec![1, 2, 3, 4], 2, 2), vec![[1, 3], [2, 4]])
+        assert_eq!(grid_cols(&vec![0, 1, 2, 3], 2, 2), [[0, 2], [1, 3]]);
+        assert_eq!(
+            grid_cols(&vec![0, 1, 2, 3, 4, 5], 3, 2),
+            [[0, 2, 4], [1, 3, 5]]
+        );
+        assert_eq!(
+            grid_cols(&vec![0, 1, 2, 3, 4, 5], 2, 3),
+            [[0, 3], [1, 4], [2, 5]]
+        );
     }
 
     #[test]
     fn test_grid_diags_neg() {
         assert_eq!(
-            grid_diags_neg(&vec![1, 2, 3, 4], 2, 2),
-            vec![vec![1, 4], vec![3], vec![1, 4], vec![2]]
-        )
+            grid_diags_neg(&vec![0, 1, 2, 3], 2, 2),
+            vec![vec![2], vec![0, 3], vec![0, 3], vec![1]]
+        );
+        assert_eq!(
+            grid_diags_neg(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8], 3, 3),
+            vec![
+                vec![6],
+                vec![3, 7],
+                vec![0, 4, 8],
+                vec![0, 4, 8],
+                vec![1, 5],
+                vec![2]
+            ]
+        );
     }
 
-    // #[test]
-    // fn test_grid_diags_pos() {
-    //     assert_eq!(
-    //         grid_diags_pos(&vec![1, 2, 3, 4], 2, 2),
-    //         vec![vec![3, 2], vec![1], vec![3, 2], vec![4]]
-    //     )
-    // }
+    #[test]
+    fn test_grid_diags_pos() {
+        assert_eq!(
+            grid_diags_pos(&vec![0, 1, 2, 3], 2, 2),
+            vec![vec![0], vec![1, 2], vec![1, 2], vec![3]]
+        );
+        assert_eq!(
+            grid_diags_pos(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8], 3, 3),
+            vec![
+                vec![0],
+                vec![1, 3],
+                vec![2, 4, 6],
+                vec![2, 4, 6],
+                vec![5, 7],
+                vec![8]
+            ]
+        );
+    }
 }
