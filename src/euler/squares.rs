@@ -1,4 +1,4 @@
-use crate::euler::util;
+use super::util;
 
 pub fn sq_sum_squares(n_terms: u32) -> u32 {
     (2 * n_terms + 1) * (n_terms + 1) * n_terms / 6

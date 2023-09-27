@@ -1,4 +1,4 @@
-use crate::euler::util;
+use super::util;
 
 pub fn pal_product_3() -> u32 {
     let mut max_current: u32 = 0;

@@ -1,4 +1,4 @@
-use crate::euler::util;
+use super::util;
 use std::collections::HashMap;
 
 pub fn letters_build_phrase(n: u32) -> String {

@@ -1,4 +1,4 @@
-use crate::euler::primes;
+use super::primes;
 
 pub fn mult_sum(mult: u32, limit: u32) -> u32 {
     let n: u32 = (limit - 1) / mult;
