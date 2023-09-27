@@ -52,7 +52,7 @@ pub fn divs_all(dividend: u64) -> Vec<u64> {
         period = period / (*p + 1) as usize;
 
         combos = (0..=*p)
-            .flat_map(|n: u32| repeat(n).take(period))
+            .flat_map(|x: u32| repeat(x).take(period))
             .cycle()
             .take(n_factors as usize)
             .collect();
@@ -74,6 +74,10 @@ pub fn divs_all(dividend: u64) -> Vec<u64> {
     factors
 }
 
+pub fn divs_count(dividend: u64) -> usize {
+    divs_all(dividend).len()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -85,5 +89,11 @@ mod tests {
             vec![1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220]
         );
         assert_eq!(divs_all(284), vec![1, 2, 4, 71, 142, 284]);
+    }
+
+    #[test]
+    fn test_divs_count() {
+        assert_eq!(divs_count(220), 12);
+        assert_eq!(divs_count(284), 6);
     }
 }

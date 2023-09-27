@@ -1,5 +1,5 @@
-use crate::euler::primes;
-use crate::euler::util;
+use super::divisors;
+use super::primes;
 
 pub fn tri_sum(n_div: u64) -> u64 {
     let mut n_div_current: u64 = 0;
@@ -45,7 +45,7 @@ pub fn tri_sum(n_div: u64) -> u64 {
     n * (n - 1) / 2
 }
 
-pub fn tri_sum_brute(n_div: u64) -> u64 {
+pub fn tri_sum_brute(n_div: usize) -> u64 {
     let mut num_current: u64 = 1;
     let mut sum_current: u64 = 0;
     let mut is_found: bool = false;
@@ -53,7 +53,7 @@ pub fn tri_sum_brute(n_div: u64) -> u64 {
     while !is_found {
         sum_current += num_current;
 
-        if util::count_divisors(sum_current) > n_div {
+        if divisors::divs_count(sum_current) > n_div {
             is_found = true;
         }
         num_current += 1;

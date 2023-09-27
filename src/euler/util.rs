@@ -1,41 +1,5 @@
 use std::collections::HashMap;
 
-pub fn count_divisors(mut current_dividend: u64) -> u64 {
-    let mut n_factors: u64 = 1;
-
-    if current_dividend % 2 == 0 {
-        let mut power_2: u64 = 0;
-        while current_dividend % 2 == 0 {
-            current_dividend /= 2;
-            power_2 += 1;
-        }
-        n_factors *= power_2 + 1;
-    }
-
-    let mut power_current: u64 = 0;
-    let mut current_try: u64 = 3;
-    let mut current_sqrt: u64 = (current_dividend as f64).sqrt() as u64;
-    while current_dividend > 1 && current_try <= current_sqrt {
-        if current_dividend % current_try == 0 {
-            while current_dividend % current_try == 0 {
-                current_dividend /= current_try;
-                power_current += 1;
-            }
-            current_sqrt = (current_dividend as f64).sqrt() as u64;
-
-            n_factors *= power_current + 1;
-            power_current = 0;
-        }
-        current_try += 2;
-    }
-
-    if current_dividend != 1 {
-        n_factors *= 2;
-    }
-
-    n_factors
-}
-
 pub fn counts_base_10(mut n: u32) -> HashMap<u32, usize> {
     let mut counts: HashMap<u32, usize> = HashMap::from([(1000, 0), (100, 0), (10, 0), (1, 0)]);
 
@@ -112,5 +76,11 @@ mod tests {
     fn test_reverse() {
         assert_eq!(reverse(123456), 654321);
         assert_eq!(reverse(123321), 123321);
+    }
+
+    #[test]
+    fn test_sum_terms() {
+        assert_eq!(sum_terms(10), 55);
+        assert_eq!(sum_terms(100), 5050);
     }
 }
