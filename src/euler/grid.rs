@@ -184,3 +184,34 @@ pub fn grid_sum_rows(grid: String) -> String {
 
     digits
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_grid_rows() {
+        assert_eq!(grid_rows(&vec![1, 2, 3, 4], 2, 2), vec![[1, 2], [3, 4]])
+    }
+
+    #[test]
+    fn test_grid_cols() {
+        assert_eq!(grid_cols(&vec![1, 2, 3, 4], 2, 2), vec![[1, 3], [2, 4]])
+    }
+
+    #[test]
+    fn test_grid_diags_neg() {
+        assert_eq!(
+            grid_diags_neg(&vec![1, 2, 3, 4], 2, 2),
+            vec![vec![1, 4], vec![3], vec![1, 4], vec![2]]
+        )
+    }
+
+    // #[test]
+    // fn test_grid_diags_pos() {
+    //     assert_eq!(
+    //         grid_diags_pos(&vec![1, 2, 3, 4], 2, 2),
+    //         vec![vec![3, 2], vec![1], vec![3, 2], vec![4]]
+    //     )
+    // }
+}
