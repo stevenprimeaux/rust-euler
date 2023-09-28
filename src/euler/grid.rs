@@ -1,11 +1,7 @@
-pub fn grid_prod_max_rowwise(grid: String, window_len: usize) -> u64 {
-    grid.split("")
-        .filter_map(|s: &str| s.parse().ok())
-        .collect::<Vec<u64>>()
-        .windows(window_len)
-        .map(|x: &[u64]| x.iter().product())
-        .max()
-        .unwrap()
+pub fn grid_to_vec(grid: String, delim: &str) -> Vec<u64> {
+    grid.split(delim)
+        .filter_map(|x: &str| x.parse().ok())
+        .collect()
 }
 
 pub fn grid_rows(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
@@ -140,14 +136,8 @@ pub fn grid_prod_max_alldir(grid: String, n_1: usize, n_2: usize, window_len: us
     *maxes.iter().max().unwrap()
 }
 
-pub fn grid_to_vec(grid: String) -> Vec<u64> {
-    grid.split("")
-        .filter_map(|s: &str| s.parse().ok())
-        .collect::<Vec<u64>>()
-}
-
 pub fn grid_cols_sums(grid: String) -> Vec<u64> {
-    let num_array: Vec<Vec<u64>> = grid_cols(&grid_to_vec(grid), 100, 50);
+    let num_array: Vec<Vec<u64>> = grid_cols(&grid_to_vec(grid, ""), 100, 50);
     let mut sums: Vec<u64> = vec![0; num_array.len()];
     for (i, el) in num_array.iter().enumerate() {
         sums[i] = el.iter().sum();
@@ -187,9 +177,20 @@ pub fn grid_sum_rows(grid: String) -> String {
     digits
 }
 
+//
+
+pub fn grid_win_max_prod(grid: String, delim: &str, win: usize) -> u64 {
+    grid_to_vec(grid, delim)
+        .windows(win)
+        .map(|x: &[u64]| x.iter().product())
+        .max()
+        .unwrap()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::data;
 
     #[test]
     fn test_grid_rows() {
@@ -249,5 +250,22 @@ mod tests {
                 vec![8]
             ]
         );
+    }
+
+    #[test]
+    fn test_grid_to_vec() {
+        let grid = String::from(
+            "
+            01
+            23
+            ",
+        );
+        assert_eq!(grid_to_vec(grid, ""), [0, 1, 2, 3])
+    }
+
+    #[test]
+    fn test_grid_win_max_prod() {
+        assert_eq!(grid_win_max_prod(data::data_08(), "", 4), 5832);
+        assert_eq!(grid_win_max_prod(data::data_08(), "", 13), 23514624000);
     }
 }
