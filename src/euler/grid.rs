@@ -1,4 +1,12 @@
-pub fn grid_to_vec(grid: String, delim: &str) -> Vec<u64> {
+// util
+
+pub fn grid_to_vec(grid: String) -> Vec<u64> {
+    grid.split("")
+        .filter_map(|x: &str| x.parse().ok())
+        .collect()
+}
+
+pub fn grid_to_vec_fn(grid: String, delim: fn(char) -> bool) -> Vec<u64> {
     grid.split(delim)
         .filter_map(|x: &str| x.parse().ok())
         .collect()
@@ -64,9 +72,10 @@ pub fn grid_diags_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64
 
     for i in 0..n_1 {
         let mut current_diag: Vec<u64> = vec![];
-        for j in (i..(((i + 1) * n_1) - 1)).step_by(n_2 - 1) {
+        for j in (i..((i * n_1) + 1)).step_by(n_2 - 1) {
             current_diag.push(num_vec[j]);
         }
+
         num_array_upper[i] = current_diag;
     }
 
@@ -84,7 +93,9 @@ pub fn grid_diags_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64
     num_array_full
 }
 
-pub fn grid_prod_max_n_array(num_array: Vec<Vec<u64>>, window_len: usize) -> u64 {
+// calc
+
+pub fn grid_max_prod_win_vecs(num_array: Vec<Vec<u64>>, window_len: usize) -> u64 {
     let mut max_product: u64 = 0;
     let mut max_product_current: u64;
     for i in 0..num_array.len() {
@@ -104,40 +115,8 @@ pub fn grid_prod_max_n_array(num_array: Vec<Vec<u64>>, window_len: usize) -> u64
     max_product
 }
 
-pub fn grid_max_row(num_vec: &Vec<u64>, n_1: usize, n_2: usize, window_len: usize) -> u64 {
-    grid_prod_max_n_array(grid_rows(&num_vec, n_1, n_2), window_len)
-}
-
-pub fn grid_max_col(num_vec: &Vec<u64>, n_1: usize, n_2: usize, window_len: usize) -> u64 {
-    grid_prod_max_n_array(grid_cols(&num_vec, n_1, n_2), window_len)
-}
-
-pub fn grid_max_diag_neg(num_vec: &Vec<u64>, n_1: usize, n_2: usize, window_len: usize) -> u64 {
-    grid_prod_max_n_array(grid_diags_neg(&num_vec, n_1, n_2), window_len)
-}
-
-pub fn grid_max_diag_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize, window_len: usize) -> u64 {
-    grid_prod_max_n_array(grid_diags_pos(&num_vec, n_1, n_2), window_len)
-}
-
-pub fn grid_prod_max_alldir(grid: String, n_1: usize, n_2: usize, window_len: usize) -> u64 {
-    let num_vec: Vec<u64> = grid
-        .split_whitespace()
-        .map(|s| s.parse().unwrap())
-        .collect::<Vec<u64>>();
-
-    let maxes: [u64; 4] = [
-        grid_max_row(&num_vec, n_1, n_2, window_len),
-        grid_max_col(&num_vec, n_1, n_2, window_len),
-        grid_max_diag_neg(&num_vec, n_1, n_2, window_len),
-        grid_max_diag_pos(&num_vec, n_1, n_2, window_len),
-    ];
-
-    *maxes.iter().max().unwrap()
-}
-
 pub fn grid_cols_sums(grid: String) -> Vec<u64> {
-    let num_array: Vec<Vec<u64>> = grid_cols(&grid_to_vec(grid, ""), 100, 50);
+    let num_array: Vec<Vec<u64>> = grid_cols(&grid_to_vec(grid), 100, 50);
     let mut sums: Vec<u64> = vec![0; num_array.len()];
     for (i, el) in num_array.iter().enumerate() {
         sums[i] = el.iter().sum();
@@ -179,18 +158,49 @@ pub fn grid_sum_rows(grid: String) -> String {
 
 //
 
-pub fn grid_win_max_prod(grid: String, delim: &str, win: usize) -> u64 {
-    grid_to_vec(grid, delim)
+pub fn grid_max_prod_win(grid: String, win: usize) -> u64 {
+    grid_to_vec(grid)
         .windows(win)
         .map(|x: &[u64]| x.iter().product())
         .max()
         .unwrap()
 }
 
+pub fn grid_max_prod_win_all(
+    grid: String,
+    delim: fn(char) -> bool,
+    n_1: usize,
+    n_2: usize,
+    window_len: usize,
+) -> u64 {
+    let num_vec: Vec<u64> = grid_to_vec_fn(grid, delim);
+
+    let mut array: Vec<Vec<u64>> = vec![];
+    array.append(&mut grid_rows(&num_vec, n_1, n_2));
+    array.append(&mut grid_cols(&num_vec, n_1, n_2));
+    array.append(&mut grid_diags_neg(&num_vec, n_1, n_2));
+    array.append(&mut grid_diags_pos(&num_vec, n_1, n_2));
+
+    grid_max_prod_win_vecs(array, window_len)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::data;
+
+    // util
+
+    #[test]
+    fn test_grid_to_vec() {
+        let grid = String::from(
+            "
+            01
+            23
+            ",
+        );
+        assert_eq!(grid_to_vec(grid), [0, 1, 2, 3])
+    }
 
     #[test]
     fn test_grid_rows() {
@@ -256,20 +266,19 @@ mod tests {
         );
     }
 
+    // calc
+
     #[test]
-    fn test_grid_to_vec() {
-        let grid = String::from(
-            "
-            01
-            23
-            ",
-        );
-        assert_eq!(grid_to_vec(grid, ""), [0, 1, 2, 3])
+    fn test_grid_max_prod_win() {
+        assert_eq!(grid_max_prod_win(data::data_08(), 4), 5832);
+        assert_eq!(grid_max_prod_win(data::data_08(), 13), 23514624000);
     }
 
     #[test]
-    fn test_grid_win_max_prod() {
-        assert_eq!(grid_win_max_prod(data::data_08(), "", 4), 5832);
-        assert_eq!(grid_win_max_prod(data::data_08(), "", 13), 23514624000);
+    fn test_grid_max_prod_win_all() {
+        assert_eq!(
+            grid_max_prod_win_all(data::data_11(), char::is_whitespace, 20, 20, 4),
+            70600674
+        );
     }
 }

@@ -3,7 +3,6 @@ use rust_euler::euler::*;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
-    // println!("11: {}", grid::grid_prod_max_alldir(data_11(), 20, 20, 4));
     // println!("13: {}", grid::grid_sum_rows(data_13()));
     // println!("15: {}", paths::path_count(20));
     // println!("18: {}", paths::path_sum_tri(data_18()));
