@@ -9,8 +9,8 @@ pub fn grid_rows(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
     let mut i_1: usize;
     let mut i_2: usize;
     for i in 0..num_vec.len() {
-        i_1 = i / n_1;
-        i_2 = i - (i_1 * n_1);
+        i_1 = i / n_2;
+        i_2 = (i + n_2) % n_2;
         num_array[i_1][i_2] = num_vec[i];
     }
 
@@ -195,10 +195,14 @@ mod tests {
     #[test]
     fn test_grid_rows() {
         assert_eq!(grid_rows(&vec![0, 1, 2, 3], 2, 2), [[0, 1], [2, 3]]);
-        // assert_eq!(
-        //     grid_rows(&vec![0, 1, 2, 3, 4, 5], 3, 2),
-        //     [[0, 1], [2, 3], [4, 5]]
-        // );
+        assert_eq!(
+            grid_rows(&vec![0, 1, 2, 3, 4, 5], 3, 2),
+            [[0, 1], [2, 3], [4, 5]]
+        );
+        assert_eq!(
+            grid_rows(&vec![0, 1, 2, 3, 4, 5], 2, 3),
+            [[0, 1, 2], [3, 4, 5]]
+        );
     }
 
     #[test]
