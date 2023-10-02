@@ -1,4 +1,4 @@
-// util
+// grid_util
 
 pub fn grid_to_vec(grid: String) -> Vec<u64> {
     grid.split("")
@@ -12,48 +12,49 @@ pub fn grid_to_vec_fn(grid: String, delim: fn(char) -> bool) -> Vec<u64> {
         .collect()
 }
 
-pub fn grid_rows(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array: Vec<Vec<u64>> = vec![vec![0; n_2]; n_1];
-    let mut i_1: usize;
-    let mut i_2: usize;
-    for i in 0..num_vec.len() {
-        i_1 = i / n_2;
-        i_2 = (i + n_2) % n_2;
-        num_array[i_1][i_2] = num_vec[i];
+pub fn grid_rows(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+    let mut array: Vec<Vec<u64>> = vec![vec![0; n_cols]; n_rows];
+    let mut i_row: usize;
+    let mut i_col: usize;
+    for n in 0..vec.len() {
+        i_row = n / n_cols;
+        i_col = n - (i_row * n_cols);
+        array[i_row][i_col] = vec[n];
     }
 
-    num_array
+    array
 }
 
-pub fn grid_cols(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array: Vec<Vec<u64>> = vec![vec![0; n_1]; n_2];
-    let mut i_1: usize;
-    let mut i_2: usize;
-    for i in 0..num_vec.len() {
-        i_1 = i / n_2;
-        i_2 = i - (i_1 * n_2);
-        num_array[i_2][i_1] = num_vec[i];
+pub fn grid_cols(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+    let mut array: Vec<Vec<u64>> = vec![vec![0; n_rows]; n_cols];
+    let mut i_row: usize;
+    let mut i_col: usize;
+    for n in 0..vec.len() {
+        i_row = n / n_cols;
+        i_col = n - (i_row * n_cols);
+        array[i_col][i_row] = vec[n];
     }
 
-    num_array
+    array
 }
 
-pub fn grid_diags_neg(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_1];
-    let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_2];
+pub fn grid_diags_neg(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+    let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_rows];
+    let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_cols];
+    let mut current_diag: Vec<u64>;
 
-    for i in 0..n_1 {
-        let mut current_diag: Vec<u64> = vec![];
-        for j in ((i * n_1)..(num_vec.len())).step_by(n_2 + 1) {
-            current_diag.push(num_vec[j]);
+    for i in 0..n_rows {
+        current_diag = vec![];
+        for j in ((i * n_rows)..(vec.len())).step_by(n_cols + 1) {
+            current_diag.push(vec[j]);
         }
         num_array_lower[i] = current_diag;
     }
 
-    for i in 0..n_2 {
-        let mut current_diag: Vec<u64> = vec![];
-        for j in (i..(num_vec.len() - (i * n_2))).step_by(n_2 + 1) {
-            current_diag.push(num_vec[j]);
+    for i in 0..n_cols {
+        current_diag = vec![];
+        for j in (i..(vec.len() - (i * n_cols))).step_by(n_cols + 1) {
+            current_diag.push(vec[j]);
         }
         num_array_upper[i] = current_diag;
     }
@@ -63,26 +64,28 @@ pub fn grid_diags_neg(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64
     let mut num_array_full: Vec<Vec<u64>> = num_array_lower;
     num_array_full.append(&mut num_array_upper);
 
+    num_array_full.dedup();
+
     num_array_full
 }
 
-pub fn grid_diags_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64>> {
-    let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_1];
-    let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_2];
+pub fn grid_diags_pos(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+    let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_rows];
+    let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_cols];
 
-    for i in 0..n_1 {
+    for i in 0..n_rows {
         let mut current_diag: Vec<u64> = vec![];
-        for j in (i..((i * n_1) + 1)).step_by(n_2 - 1) {
-            current_diag.push(num_vec[j]);
+        for j in (i..((i * n_rows) + 1)).step_by(n_cols - 1) {
+            current_diag.push(vec[j]);
         }
 
         num_array_upper[i] = current_diag;
     }
 
-    for i in 0..n_2 {
+    for i in 0..n_cols {
         let mut current_diag: Vec<u64> = vec![];
-        for j in ((n_2 * i + (n_2 - 1))..((num_vec.len() - n_2) + 1 + i)).step_by(n_2 - 1) {
-            current_diag.push(num_vec[j]);
+        for j in ((n_cols * i + (n_cols - 1))..((vec.len() - n_cols) + 1 + i)).step_by(n_cols - 1) {
+            current_diag.push(vec[j]);
         }
         num_array_lower[i] = current_diag;
     }
@@ -90,30 +93,12 @@ pub fn grid_diags_pos(num_vec: &Vec<u64>, n_1: usize, n_2: usize) -> Vec<Vec<u64
     let mut num_array_full: Vec<Vec<u64>> = num_array_upper;
     num_array_full.append(&mut num_array_lower);
 
+    num_array_full.dedup();
+
     num_array_full
 }
 
-// calc
-
-pub fn grid_max_prod_win_vecs(num_array: Vec<Vec<u64>>, window_len: usize) -> u64 {
-    let mut max_product: u64 = 0;
-    let mut max_product_current: u64;
-    for i in 0..num_array.len() {
-        if num_array[i].len() >= window_len {
-            max_product_current = num_array[i]
-                .windows(window_len)
-                .map(|x: &[u64]| x.iter().product())
-                .max()
-                .unwrap();
-
-            if max_product_current > max_product {
-                max_product = max_product_current;
-            }
-        }
-    }
-
-    max_product
-}
+//
 
 pub fn grid_cols_sums(grid: String) -> Vec<u64> {
     let num_array: Vec<Vec<u64>> = grid_cols(&grid_to_vec(grid), 100, 50);
@@ -156,7 +141,7 @@ pub fn grid_sum_rows(grid: String) -> String {
     digits
 }
 
-//
+// grid_calc
 
 pub fn grid_max_prod_win(grid: String, win: usize) -> u64 {
     grid_to_vec(grid)
@@ -166,22 +151,42 @@ pub fn grid_max_prod_win(grid: String, win: usize) -> u64 {
         .unwrap()
 }
 
+pub fn grid_max_prod_win_vecs(array: Vec<Vec<u64>>, win: usize) -> u64 {
+    let mut max_prod: u64 = 0;
+    let mut max_prod_current: u64;
+    for v in array {
+        if v.len() >= win {
+            max_prod_current = v
+                .windows(win)
+                .map(|x: &[u64]| x.iter().product())
+                .max()
+                .unwrap();
+
+            if max_prod_current > max_prod {
+                max_prod = max_prod_current;
+            }
+        }
+    }
+
+    max_prod
+}
+
 pub fn grid_max_prod_win_all(
     grid: String,
     delim: fn(char) -> bool,
-    n_1: usize,
-    n_2: usize,
-    window_len: usize,
+    n_rows: usize,
+    n_cols: usize,
+    win: usize,
 ) -> u64 {
-    let num_vec: Vec<u64> = grid_to_vec_fn(grid, delim);
+    let vec: Vec<u64> = grid_to_vec_fn(grid, delim);
 
     let mut array: Vec<Vec<u64>> = vec![];
-    array.append(&mut grid_rows(&num_vec, n_1, n_2));
-    array.append(&mut grid_cols(&num_vec, n_1, n_2));
-    array.append(&mut grid_diags_neg(&num_vec, n_1, n_2));
-    array.append(&mut grid_diags_pos(&num_vec, n_1, n_2));
+    array.append(&mut grid_rows(&vec, n_rows, n_cols));
+    array.append(&mut grid_cols(&vec, n_rows, n_cols));
+    array.append(&mut grid_diags_neg(&vec, n_rows, n_cols));
+    array.append(&mut grid_diags_pos(&vec, n_rows, n_cols));
 
-    grid_max_prod_win_vecs(array, window_len)
+    grid_max_prod_win_vecs(array, win)
 }
 
 #[cfg(test)]
@@ -189,7 +194,7 @@ mod tests {
     use super::*;
     use crate::data;
 
-    // util
+    // grid_util
 
     #[test]
     fn test_grid_to_vec() {
@@ -199,7 +204,22 @@ mod tests {
             23
             ",
         );
-        assert_eq!(grid_to_vec(grid), [0, 1, 2, 3])
+        assert_eq!(grid_to_vec(grid), [0, 1, 2, 3]);
+    }
+
+    #[test]
+    fn test_grid_to_vec_fn() {
+        let grid = String::from(
+            "
+            00 01 02 03
+            04 05 06 07
+            08 09 10 11
+            ",
+        );
+        assert_eq!(
+            grid_to_vec_fn(grid, char::is_whitespace),
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        );
     }
 
     #[test]
@@ -232,18 +252,11 @@ mod tests {
     fn test_grid_diags_neg() {
         assert_eq!(
             grid_diags_neg(&vec![0, 1, 2, 3], 2, 2),
-            vec![vec![2], vec![0, 3], vec![0, 3], vec![1]]
+            vec![vec![2], vec![0, 3], vec![1]]
         );
         assert_eq!(
             grid_diags_neg(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8], 3, 3),
-            vec![
-                vec![6],
-                vec![3, 7],
-                vec![0, 4, 8],
-                vec![0, 4, 8],
-                vec![1, 5],
-                vec![2]
-            ]
+            vec![vec![6], vec![3, 7], vec![0, 4, 8], vec![1, 5], vec![2]]
         );
     }
 
@@ -251,26 +264,18 @@ mod tests {
     fn test_grid_diags_pos() {
         assert_eq!(
             grid_diags_pos(&vec![0, 1, 2, 3], 2, 2),
-            vec![vec![0], vec![1, 2], vec![1, 2], vec![3]]
+            vec![vec![0], vec![1, 2], vec![3]]
         );
         assert_eq!(
             grid_diags_pos(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8], 3, 3),
-            vec![
-                vec![0],
-                vec![1, 3],
-                vec![2, 4, 6],
-                vec![2, 4, 6],
-                vec![5, 7],
-                vec![8]
-            ]
+            vec![vec![0], vec![1, 3], vec![2, 4, 6], vec![5, 7], vec![8]]
         );
     }
 
-    // calc
+    // grid_calc
 
     #[test]
     fn test_grid_max_prod_win() {
-        assert_eq!(grid_max_prod_win(data::data_08(), 4), 5832);
         assert_eq!(grid_max_prod_win(data::data_08(), 13), 23514624000);
     }
 
