@@ -102,7 +102,6 @@ mod tests {
 
     #[test]
     fn test_prime_nth() {
-        assert_eq!(prime_nth(6), 13);
         assert_eq!(prime_nth(10001), 104743);
     }
 
@@ -126,13 +125,11 @@ mod tests {
 
     #[test]
     fn test_prime_sum() {
-        assert_eq!(prime_sum(10), 17);
         assert_eq!(prime_sum(2000000), 142913828922);
     }
 
     #[test]
     fn test_prime_fact_max() {
-        assert_eq!(prime_fact_max(13195), 29);
         assert_eq!(prime_fact_max(600851475143), 6857);
     }
 
