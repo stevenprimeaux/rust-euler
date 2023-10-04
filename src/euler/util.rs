@@ -1,5 +1,16 @@
 use std::collections::HashMap;
 
+/// Breaks a number into counts of powers of 10.
+///
+/// # Examples
+///
+/// ```
+/// use rust_euler::euler::util::counts_base_10;
+/// use std::collections::HashMap;
+///
+/// assert_eq!(counts_base_10(123), HashMap::from([(1000, 0), (100, 1), (10, 2), (1, 3)]));
+/// ```
+///
 pub fn counts_base_10(mut n: u32) -> HashMap<u32, usize> {
     let mut counts: HashMap<u32, usize> = HashMap::from([(1000, 0), (100, 0), (10, 0), (1, 0)]);
 
@@ -28,6 +39,16 @@ pub fn gcd(a: u64, b: u64) -> u64 {
     gcd(b, a % b)
 }
 
+/// Reverses an integer.
+///
+/// # Examples
+///
+/// ```
+/// use rust_euler::euler::util::reverse;
+///
+/// assert_eq!(reverse(123), 321);
+/// ```
+///
 pub fn reverse(mut n: u32) -> u32 {
     let mut n_rev: u32 = 0;
     while n > 0 {

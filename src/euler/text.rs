@@ -21,7 +21,7 @@ impl Word {
 }
 
 pub fn txt_names_sum<T: IntoUrl>(url: T) -> u64 {
-    let f = blocking::get(url).unwrap().text().unwrap();
+    let f: String = blocking::get(url).unwrap().text().unwrap();
 
     let mut vec: Vec<String> = f
         .split(",")
