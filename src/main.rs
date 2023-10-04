@@ -8,5 +8,8 @@ fn main() {
     // println!("19: {}", calendar::cal_count_sundays(1901, 2000, 2));
     // println!("21: {}", amicable::ami_sum(10000));
 
-    println!("22: {}", text::txt_names_sum("data/names.txt".as_ref()));
+    println!(
+        "22: {}",
+        text::txt_names_sum("https://projecteuler.net/resources/documents/0022_names.txt")
+    );
 }
