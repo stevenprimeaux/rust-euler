@@ -12,5 +12,6 @@ pub mod paths;
 pub mod primes;
 pub mod pythagorean;
 pub mod squares;
+pub mod text;
 pub mod triangular;
 pub mod util;
