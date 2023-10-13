@@ -74,8 +74,19 @@ pub fn divs_all(dividend: u64) -> Vec<u64> {
     factors
 }
 
+pub fn divs_proper(dividend: u64) -> Vec<u64> {
+    let mut divs: Vec<u64> = divs_all(dividend);
+    divs.pop();
+
+    divs
+}
+
 pub fn divs_count(dividend: u64) -> usize {
     divs_all(dividend).len()
+}
+
+pub fn divs_sum_proper(dividend: u64) -> u64 {
+    divs_proper(dividend).iter().sum()
 }
 
 #[cfg(test)]
@@ -86,14 +97,26 @@ mod tests {
     fn test_divs_all() {
         assert_eq!(
             divs_all(220),
-            vec![1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220]
+            [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220]
         );
-        assert_eq!(divs_all(284), vec![1, 2, 4, 71, 142, 284]);
+        assert_eq!(divs_all(284), [1, 2, 4, 71, 142, 284]);
+    }
+
+    #[test]
+    fn test_divs_proper() {
+        assert_eq!(divs_proper(220), [1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110]);
+        assert_eq!(divs_proper(284), [1, 2, 4, 71, 142]);
     }
 
     #[test]
     fn test_divs_count() {
         assert_eq!(divs_count(220), 12);
         assert_eq!(divs_count(284), 6);
+    }
+
+    #[test]
+    fn test_divs_sum_proper() {
+        assert_eq!(divs_sum_proper(12), 16);
+        assert_eq!(divs_sum_proper(28), 28);
     }
 }

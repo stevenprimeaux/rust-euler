@@ -1,3 +1,4 @@
+pub mod abundant;
 pub mod amicable;
 pub mod calendar;
 pub mod collatz;
