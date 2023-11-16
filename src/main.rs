@@ -12,5 +12,9 @@ fn main() {
     //     text::txt_names_sum("https://projecteuler.net/resources/documents/0022_names.txt")
     // );
     // println!("23: {}", abundant::abund_sum_addends_notabundant(28123))
-    permutation::perm_lex(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    println!(
+        "24: {}",
+        permutation::perm_lex(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 1000000)
+    );
 }
