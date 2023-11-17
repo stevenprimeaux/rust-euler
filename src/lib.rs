@@ -1,4 +1,4 @@
 pub mod data;
 pub mod euler;
 
-pub use crate::euler::fibonacci::*;
+pub use crate::euler::*;

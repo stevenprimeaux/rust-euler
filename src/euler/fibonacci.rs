@@ -35,11 +35,11 @@ pub fn fib_sum_even(limit: u32) -> u32 {
 /// # Examples
 ///
 /// ```
-/// use rust_euler;
+/// use rust_euler::fibonacci::fib_oflow;
 ///
-/// assert_eq!(rust_euler::fib_oflow(1), 1);
-/// assert_eq!(rust_euler::fib_oflow(2), 7);
-/// assert_eq!(rust_euler::fib_oflow(3), 12);
+/// assert_eq!(fib_oflow(1), 1);
+/// assert_eq!(fib_oflow(2), 7);
+/// assert_eq!(fib_oflow(3), 12);
 /// ```
 pub fn fib_oflow(digits: usize) -> usize {
     let mut a: Vec<u64> = vec![0];

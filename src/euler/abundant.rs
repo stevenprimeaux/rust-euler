@@ -1,17 +1,19 @@
 use super::divisors;
 
-/// Returns whether a number is abundant or not.
+/// Returns whether a number is "abundant" or not.
 ///
-/// A number is called abundant if the sum of its proper divisors is greater than the number itself.
+/// An [abundant number](https://en.wikipedia.org/wiki/Abundant_number)
+/// is a positive integer for which the sum of its proper divisors
+/// is greater than the number itself.
 ///
 /// # Examples
 ///
 /// ```
-/// use rust_euler::euler::abundant::is_abundant;
+/// use rust_euler::abundant::is_abundant;
 ///
-/// assert_eq!(is_abundant(12), true);
-/// assert_eq!(is_abundant(13), false);
-/// assert_eq!(is_abundant(14), false);
+/// assert_eq!(is_abundant(12), true);  // (1 + 2 + 3 + 4 + 6) > 12
+/// assert_eq!(is_abundant(13), false); // (1) < 13
+/// assert_eq!(is_abundant(14), false); // (1 + 2 + 7) < 14
 /// ```
 pub fn is_abundant(dividend: u64) -> bool {
     let sum: u64 = divisors::divs_sum_proper(dividend);
@@ -19,25 +21,33 @@ pub fn is_abundant(dividend: u64) -> bool {
     sum > dividend
 }
 
-/// Returns sum of all numbers up to a specified value that cannot be written as the sum of two abundant numbers.
+/// Returns sum of all numbers up to a specified value that cannot be written
+/// as the sum of two abundant numbers.
 ///
-/// Note that all integers greater than 28123 can be written as the sum of two abundant numbers.
+/// Note that all integers greater than 28123
+/// can be written as the sum of two abundant numbers.
 ///
 /// # Examples
 ///
 /// ```
-/// use rust_euler::euler::abundant::abund_sum_addends_notabundant;
+/// use rust_euler::abundant::abund_sum_addends_notabundant;
 ///
-/// assert_eq!(abund_sum_addends_notabundant(23), 276);
-/// assert_eq!(abund_sum_addends_notabundant(24), 276);
-/// assert_eq!(abund_sum_addends_notabundant(25), 301);
+/// assert_eq!(abund_sum_addends_notabundant(22), 253);
+/// assert_eq!(abund_sum_addends_notabundant(23), 276); // increment by 23
+/// assert_eq!(abund_sum_addends_notabundant(24), 276); // don't increment
+/// assert_eq!(abund_sum_addends_notabundant(25), 301); // increment by 25
 /// ```
-/// In the example above, note that 12 is the smallest abundant number, so the smallest integer that can be written as the sum of two abundant numbers is 24.
-/// As a result, the running sum increments for all values up to 23, but not from 23 to 24.
+///
+/// Note that 12 is the smallest abundant number,
+/// so the smallest integer that can be written
+/// as the sum of two abundant numbers is 24.
+/// As a result, the running sum increments for all values up to 23,
+/// but not from 23 to 24.
 pub fn abund_sum_addends_notabundant(limit: u64) -> u64 {
     let mut abundants: Vec<u64> = vec![];
     let mut sieve: Vec<bool> = vec![false; limit as usize + 1];
     let mut sum: u64 = 0;
+    let mut sum_current: u64;
 
     for a in 12..=limit {
         if is_abundant(a) {
@@ -47,7 +57,7 @@ pub fn abund_sum_addends_notabundant(limit: u64) -> u64 {
 
     for a_1 in &abundants {
         for a_2 in &abundants {
-            let sum_current: u64 = a_1 + a_2;
+            sum_current = a_1 + a_2;
             if sum_current <= limit {
                 sieve[sum_current as usize] = true;
             }
@@ -69,7 +79,8 @@ mod tests {
 
     #[test]
     fn test_is_abundant() {
-        assert_eq!(is_abundant(12), true);
+        assert_eq!(is_abundant(24), true);
+        assert_eq!(is_abundant(26), false);
         assert_eq!(is_abundant(28), false);
     }
 

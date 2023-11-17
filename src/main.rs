@@ -12,5 +12,5 @@ fn main() {
     // );
     // println!("23: {}", abundant::abund_sum_addends_notabundant(28123))
 
-    println!("\n25: {}", rust_euler::fib_oflow(1000));
+    println!("\n25: {}", rust_euler::fibonacci::fib_oflow(1000));
 }
