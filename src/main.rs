@@ -1,5 +1,4 @@
-use rust_euler::euler::*;
-// use rust_euler::data::*;
+use rust_euler;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
@@ -13,8 +12,5 @@ fn main() {
     // );
     // println!("23: {}", abundant::abund_sum_addends_notabundant(28123))
 
-    println!(
-        "24: {}",
-        permutation::perm_lex(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 1000000)
-    );
+    println!("\n25: {}", rust_euler::fib_oflow(1000));
 }
