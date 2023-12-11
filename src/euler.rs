@@ -15,5 +15,6 @@ pub mod primes;
 pub mod pythagorean;
 pub mod squares;
 pub mod text;
+pub mod totient;
 pub mod triangular;
 pub mod util;
