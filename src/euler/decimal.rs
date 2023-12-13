@@ -1,4 +1,4 @@
-use crate::euler::{primrootmod, totient};
+use crate::euler::{modulo, totient};
 
 pub fn dec_period<T: Into<u64>>(limit: T) -> u64 {
     let mut n_max: u64 = 0;
@@ -7,7 +7,7 @@ pub fn dec_period<T: Into<u64>>(limit: T) -> u64 {
 
     for n in 1..limit.into() {
         totient = totient::divs_totient(n);
-        if totient > period_max && primrootmod::is_primrootmod(10, n) {
+        if totient > period_max && modulo::is_primrootmod(10, n) {
             period_max = totient;
             n_max = n;
         }

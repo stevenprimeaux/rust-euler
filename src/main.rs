@@ -14,5 +14,5 @@ fn main() {
 
     // println!("\n25: {}", rust_euler::fibonacci::fib_oflow(1000));
 
-    println!("\n26: {}", rust_euler::decimal::dec_period(1000u16));
+    println!("26: {}", rust_euler::modulo::mod_order(10, 13));
 }
