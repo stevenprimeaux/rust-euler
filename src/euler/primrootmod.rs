@@ -1,4 +1,4 @@
-use crate::primes::is_prime;
+use crate::euler::primes;
 
 use super::totient;
 
@@ -8,7 +8,7 @@ pub fn is_primrootmod(g: u64, n: u64) -> bool {
 
     let mut is_primrootmod = false;
 
-    if is_prime(n) || ((n % 2 == 0) && is_prime(n / 2)) {
+    if primes::is_prime(n) || ((n % 2 == 0) && primes::is_prime(n / 2)) {
         is_primrootmod = true;
         for d in divs_prime_tot {
             let exp: u64 = tot / d;
@@ -21,22 +21,6 @@ pub fn is_primrootmod(g: u64, n: u64) -> bool {
     is_primrootmod
 }
 
-pub fn dec_period(limit: u64) -> u64 {
-    let mut max: u64 = 0;
-    let mut max_totient: u64 = 0;
-    let mut current_totient: u64;
-
-    for n in 6..limit {
-        current_totient = totient::divs_totient(n);
-        if current_totient > max_totient && is_primrootmod(10, n) {
-            max_totient = current_totient;
-            max = n;
-        }
-    }
-
-    max
-}
-
 pub fn exp_mod(base: u64, exp: u64, m: u64) -> u64 {
     let mut c: u64 = 1;
     let mut exp_current: u64 = 0;
@@ -47,14 +31,4 @@ pub fn exp_mod(base: u64, exp: u64, m: u64) -> u64 {
     }
 
     c
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_dec_period() {
-        assert_eq!(dec_period(1000), 983);
-    }
 }
