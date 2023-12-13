@@ -1,12 +1,12 @@
 use std::iter::zip;
 
 pub struct Factorization {
-    divisors_prime: Vec<u64>,
-    powers: Vec<u32>,
+    pub divisors_prime: Vec<u64>,
+    pub powers: Vec<u32>,
 }
 
 pub fn divs_prime(dividend: u64) -> Factorization {
-    let mut divisors: Vec<u64> = vec![];
+    let mut divisors_prime: Vec<u64> = vec![];
     let mut powers: Vec<u32> = vec![];
 
     let mut div_current: u64 = dividend;
@@ -14,7 +14,7 @@ pub fn divs_prime(dividend: u64) -> Factorization {
     let mut pow_current: u32 = 0;
 
     if div_current % try_current == 0 {
-        divisors.push(try_current);
+        divisors_prime.push(try_current);
 
         while div_current % try_current == 0 {
             div_current /= try_current;
@@ -29,7 +29,7 @@ pub fn divs_prime(dividend: u64) -> Factorization {
     let mut sqrt_current: u64 = (div_current as f64).sqrt() as u64;
     while div_current > 1 && try_current <= sqrt_current {
         if div_current % try_current == 0 {
-            divisors.push(try_current);
+            divisors_prime.push(try_current);
 
             while div_current % try_current == 0 {
                 div_current /= try_current;
@@ -44,13 +44,13 @@ pub fn divs_prime(dividend: u64) -> Factorization {
     }
 
     if div_current != 1 {
-        divisors.push(div_current);
+        divisors_prime.push(div_current);
         powers.push(1);
     }
 
     Factorization {
-        divisors_prime: divisors,
-        powers: powers,
+        divisors_prime,
+        powers,
     }
 }
 

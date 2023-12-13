@@ -14,5 +14,5 @@ fn main() {
 
     // println!("\n25: {}", rust_euler::fibonacci::fib_oflow(1000));
 
-    println!("\n26: {}", rust_euler::totient::divs_totient(24));
+    println!("\n26: {}", rust_euler::primrootmod::dec_period(1000));
 }

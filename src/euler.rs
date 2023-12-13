@@ -12,6 +12,7 @@ pub mod palindrome;
 pub mod paths;
 pub mod permutation;
 pub mod primes;
+pub mod primrootmod;
 pub mod pythagorean;
 pub mod squares;
 pub mod text;
