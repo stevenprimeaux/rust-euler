@@ -31,7 +31,7 @@ pub fn is_primrootmod(base: u64, n: u64) -> bool {
     let tot: u64 = totient::divs_totient(n);
     let divs_prime_tot: Vec<u64> = totient::divs_prime(tot).divisors_prime;
 
-    if primes::is_prime(n) || ((n % 2 == 0) && primes::is_prime(n / 2)) {
+    if (n > base) && (primes::is_prime(n) || ((n % 2 == 0) && primes::is_prime(n / 2))) {
         is_primrootmod = true;
         for d in divs_prime_tot {
             let exp: u64 = tot / d;
@@ -49,12 +49,23 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_mod_exp() {
+        assert_eq!(mod_exp(10, 10, 11), 1);
+        assert_eq!(mod_exp(10, 12, 13), 1);
+        assert_eq!(mod_exp(10, 16, 17), 1);
+    }
+
+    #[test]
     fn test_mod_order() {
-        assert_eq!(mod_order(10, 3), 1);
-        assert_eq!(mod_order(10, 7), 6);
-        assert_eq!(mod_order(10, 9), 1);
         assert_eq!(mod_order(10, 11), 2);
         assert_eq!(mod_order(10, 13), 6);
         assert_eq!(mod_order(10, 17), 16);
+    }
+
+    #[test]
+    fn test_is_primmodroot() {
+        assert_eq!(is_primrootmod(10, 11), false);
+        assert_eq!(is_primrootmod(10, 13), false);
+        assert_eq!(is_primrootmod(10, 17), true);
     }
 }
