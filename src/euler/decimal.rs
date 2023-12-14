@@ -6,7 +6,7 @@ pub fn dec_period_max(limit: u64) -> u64 {
     let mut totient: u64;
 
     for n in 1..limit {
-        totient = totient::divs_totient(n);
+        totient = totient::tot_count(n);
         if totient > period_max && modulo::is_primrootmod(10, n) {
             period_max = totient;
             n_max = n;
