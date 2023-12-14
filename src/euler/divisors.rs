@@ -1,11 +1,18 @@
 use std::iter::repeat;
 
 pub struct Factorization {
-    pub divisors_prime: Vec<u64>,
+    pub divs_prime: Vec<u64>,
     pub powers: Vec<u32>,
 }
 
-pub fn divs_fact(dividend: u64) -> Factorization {
+impl Factorization {
+    pub fn new(n: u64) -> Self {
+        let (divs_prime, powers): (Vec<u64>, Vec<u32>) = divs_fact(n);
+        Self { divs_prime, powers }
+    }
+}
+
+pub fn divs_fact(dividend: u64) -> (Vec<u64>, Vec<u32>) {
     let mut divisors_prime: Vec<u64> = vec![];
     let mut powers: Vec<u32> = vec![];
 
@@ -48,10 +55,7 @@ pub fn divs_fact(dividend: u64) -> Factorization {
         powers.push(1);
     }
 
-    Factorization {
-        divisors_prime,
-        powers,
-    }
+    (divisors_prime, powers)
 }
 
 pub fn divs_all(dividend: u64) -> Vec<u64> {

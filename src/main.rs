@@ -1,4 +1,4 @@
-use rust_euler;
+use rust_euler::euler::*;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
@@ -14,5 +14,5 @@ fn main() {
 
     // println!("\n25: {}", rust_euler::fibonacci::fib_oflow(1000));
 
-    println!("\n26: {}", rust_euler::decimal::dec_period_max(1000));
+    println!("\n26: {}", decimal::dec_period_max(1000));
 }

@@ -1,4 +1,4 @@
-use crate::euler::{divisors, primes, totient, util};
+use crate::{divisors::Factorization, totient, util};
 
 pub fn mod_exp(base: u64, exp: u64, m: u64) -> u64 {
     let mut result: u64 = 1;
@@ -29,9 +29,9 @@ pub fn mod_order(base: u64, n: u64) -> u64 {
 pub fn is_primrootmod(base: u64, n: u64) -> bool {
     let mut is_primrootmod: bool = false;
     let tot: u64 = totient::tot_count(n);
-    let divs_prime: Vec<u64> = divisors::divs_fact(tot).divisors_prime;
+    let divs_prime: Vec<u64> = Factorization::new(tot).divs_prime;
 
-    if (n > base) && (primes::is_prime(n) || ((n % 2 == 0) && primes::is_prime(n / 2))) {
+    if n > base {
         is_primrootmod = true;
         for d in divs_prime {
             let exp: u64 = tot / d;
