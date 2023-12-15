@@ -1,5 +1,12 @@
 use crate::{divisors::Factorization, modulo, primes};
 
+pub fn is_repeating(n: u64) -> bool {
+    Factorization::new(n)
+        .divs_prime
+        .iter()
+        .any(|&x| x != 2 && x != 5)
+}
+
 pub fn dec_period_max(limit: u64) -> u64 {
     let mut n_max: u64 = 0;
     let mut period_max: u64 = 0;
@@ -32,21 +39,9 @@ pub fn dec_period_max(limit: u64) -> u64 {
     n_max
 }
 
-pub fn is_repeating(n: u64) -> bool {
-    Factorization::new(n)
-        .divs_prime
-        .iter()
-        .any(|&x| x != 2 && x != 5)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_dec_period() {
-        assert_eq!(dec_period_max(1000), 983);
-    }
 
     #[test]
     fn test_is_repeating() {
@@ -55,5 +50,10 @@ mod tests {
         assert_eq!(is_repeating(4), false);
         assert_eq!(is_repeating(5), false);
         assert_eq!(is_repeating(6), true);
+    }
+
+    #[test]
+    fn test_dec_period() {
+        assert_eq!(dec_period_max(1000), 983);
     }
 }
