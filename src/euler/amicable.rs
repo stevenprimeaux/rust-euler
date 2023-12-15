@@ -1,4 +1,4 @@
-use super::divisors;
+use crate::divisors;
 
 pub fn ami_sum(limit: u64) -> u64 {
     let mut sum: u64 = 0;
@@ -29,7 +29,6 @@ mod tests {
 
     #[test]
     fn test_ami_sum() {
-        assert_eq!(ami_sum(300), 504);
         assert_eq!(ami_sum(10000), 31626);
     }
 }

@@ -1,9 +1,9 @@
-use super::divisors;
+use crate::divisors;
 
 /// Returns whether a number is "abundant" or not.
 ///
-/// An [abundant number](https://en.wikipedia.org/wiki/Abundant_number)
-/// is a positive integer for which the sum of its proper divisors
+/// An abundant number is a positive integer
+/// for which the sum of its proper divisors
 /// is greater than the number itself.
 ///
 /// # Examples
