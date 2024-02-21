@@ -5,13 +5,12 @@ use std::collections::HashMap;
 /// # Examples
 ///
 /// ```
-/// use rust_euler::euler::util::counts_base_10;
+/// use rust_euler::util::counts_10;
 /// use std::collections::HashMap;
 ///
-/// assert_eq!(counts_base_10(123), HashMap::from([(1000, 0), (100, 1), (10, 2), (1, 3)]));
+/// assert_eq!(counts_10(123), HashMap::from([(1000, 0), (100, 1), (10, 2), (1, 3)]));
 /// ```
-///
-pub fn counts_base_10(mut n: u32) -> HashMap<u32, usize> {
+pub fn counts_10(mut n: u32) -> HashMap<u32, usize> {
     let mut counts: HashMap<u32, usize> = HashMap::from([(1000, 0), (100, 0), (10, 0), (1, 0)]);
 
     if n >= 1000 {
@@ -44,7 +43,7 @@ pub fn gcd(a: u64, b: u64) -> u64 {
 /// # Examples
 ///
 /// ```
-/// use rust_euler::euler::util::reverse;
+/// use rust_euler::util::reverse;
 ///
 /// assert_eq!(reverse(123), 321);
 /// ```
@@ -68,29 +67,33 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_counts_base_10() {
+    fn test_counts_10() {
         assert_eq!(
-            counts_base_10(3),
+            counts_10(3),
             HashMap::from([(1000, 0), (100, 0), (10, 0), (1, 3)])
         );
         assert_eq!(
-            counts_base_10(33),
+            counts_10(33),
             HashMap::from([(1000, 0), (100, 0), (10, 3), (1, 3)])
         );
         assert_eq!(
-            counts_base_10(333),
+            counts_10(333),
             HashMap::from([(1000, 0), (100, 3), (10, 3), (1, 3)])
         );
         assert_eq!(
-            counts_base_10(3333),
+            counts_10(3333),
             HashMap::from([(1000, 3), (100, 3), (10, 3), (1, 3)])
         );
     }
 
     #[test]
     fn test_gcd() {
-        assert_eq!(gcd(8, 12), 4);
-        assert_eq!(gcd(9, 28), 1);
+        assert_eq!(gcd(2, 3), 1);
+        assert_eq!(gcd(4, 9), 1);
+        assert_eq!(gcd(2, 4), 2);
+        assert_eq!(gcd(4, 6), 2);
+        assert_eq!(gcd(3, 6), 3);
+        assert_eq!(gcd(6, 9), 3);
     }
 
     #[test]

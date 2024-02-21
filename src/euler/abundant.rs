@@ -1,9 +1,6 @@
 use crate::divisors;
 
-/// Returns whether a number is "abundant" or not.
-///
-/// An abundant number is a positive integer
-/// for which the sum of its proper divisors
+/// Given a number, returns whether the sum of that number's proper divisors
 /// is greater than the number itself.
 ///
 /// # Examples
@@ -16,9 +13,7 @@ use crate::divisors;
 /// assert_eq!(is_abundant(14), false); // (1 + 2 + 7) < 14
 /// ```
 pub fn is_abundant(dividend: u64) -> bool {
-    let sum: u64 = divisors::divs_sum_proper(dividend);
-
-    sum > dividend
+    divisors::divs_proper_sum(dividend) > dividend
 }
 
 /// Returns sum of all numbers up to a specified value that cannot be written
@@ -30,12 +25,12 @@ pub fn is_abundant(dividend: u64) -> bool {
 /// # Examples
 ///
 /// ```
-/// use rust_euler::abundant::abund_sum_addends_notabundant;
+/// use rust_euler::abundant::abund_adds_notabund_sum;
 ///
-/// assert_eq!(abund_sum_addends_notabundant(22), 253);
-/// assert_eq!(abund_sum_addends_notabundant(23), 276); // increment by 23
-/// assert_eq!(abund_sum_addends_notabundant(24), 276); // don't increment
-/// assert_eq!(abund_sum_addends_notabundant(25), 301); // increment by 25
+/// assert_eq!(abund_adds_notabund_sum(22), 253);
+/// assert_eq!(abund_adds_notabund_sum(23), 276); // increment by 23
+/// assert_eq!(abund_adds_notabund_sum(24), 276); // don't increment
+/// assert_eq!(abund_adds_notabund_sum(25), 301); // increment by 25
 /// ```
 ///
 /// Note that 12 is the smallest abundant number,
@@ -43,11 +38,10 @@ pub fn is_abundant(dividend: u64) -> bool {
 /// as the sum of two abundant numbers is 24.
 /// As a result, the running sum increments for all values up to 23,
 /// but not from 23 to 24.
-pub fn abund_sum_addends_notabundant(limit: u64) -> u64 {
-    let mut abundants: Vec<u64> = vec![];
-    let mut sieve: Vec<bool> = vec![false; limit as usize + 1];
+pub fn abund_adds_notabund_sum(limit: u64) -> u64 {
     let mut sum: u64 = 0;
-    let mut sum_current: u64;
+    let mut abundants: Vec<u64> = vec![];
+    let mut sieve: Vec<bool> = vec![false; (limit as usize) + 1];
 
     for a in 12..=limit {
         if is_abundant(a) {
@@ -55,6 +49,7 @@ pub fn abund_sum_addends_notabundant(limit: u64) -> u64 {
         }
     }
 
+    let mut sum_current: u64;
     for a_1 in &abundants {
         for a_2 in &abundants {
             sum_current = a_1 + a_2;
@@ -86,6 +81,6 @@ mod tests {
 
     #[test]
     fn test_abund_sum_addends_notabundant() {
-        assert_eq!(abund_sum_addends_notabundant(28123), 4179871);
+        assert_eq!(abund_adds_notabund_sum(28123), 4179871);
     }
 }

@@ -1,8 +1,8 @@
-use super::util;
+use crate::util;
 use std::collections::HashMap;
 
 pub fn letters_build_phrase(n: u32) -> String {
-    let counts: HashMap<u32, usize> = util::counts_base_10(n);
+    let counts: HashMap<u32, usize> = util::counts_10(n);
     let mut phrase: String = String::from("");
 
     if counts[&1000] >= 1 {

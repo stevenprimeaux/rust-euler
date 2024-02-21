@@ -15,6 +15,7 @@ pub mod paths;
 pub mod permutation;
 pub mod primes;
 pub mod pythagorean;
+pub mod quadratic;
 pub mod squares;
 pub mod text;
 pub mod totient;

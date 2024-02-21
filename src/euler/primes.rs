@@ -93,7 +93,11 @@ pub fn prime_fact_max(mut div_current: u64) -> u64 {
 }
 
 pub fn is_prime(n: u64) -> bool {
-    prime_fact_max(n) == n && n != 1
+    match n {
+        0 => false,
+        1 => false,
+        x => prime_fact_max(x) == x,
+    }
 }
 
 #[cfg(test)]

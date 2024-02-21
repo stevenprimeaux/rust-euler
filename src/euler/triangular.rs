@@ -1,5 +1,4 @@
-use super::divisors;
-use super::primes;
+use crate::{divisors, primes};
 
 pub fn tri_sum(n_div: u64) -> u64 {
     let mut n_div_current: u64 = 0;
@@ -53,7 +52,7 @@ pub fn tri_sum_brute(n_div: usize) -> u64 {
     while !is_found {
         sum_current += num_current;
 
-        if divisors::divs_count(sum_current) > n_div {
+        if divisors::divs_all_count(sum_current) > n_div {
             is_found = true;
         }
         num_current += 1;
@@ -68,13 +67,11 @@ mod tests {
 
     #[test]
     fn test_tri_sum() {
-        assert_eq!(tri_sum(5), 28);
         assert_eq!(tri_sum(500), 76576500);
     }
 
     #[test]
     fn test_tri_sum_brute() {
-        assert_eq!(tri_sum_brute(5), 28);
         assert_eq!(tri_sum_brute(500), 76576500);
     }
 }

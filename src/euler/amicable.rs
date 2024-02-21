@@ -3,8 +3,6 @@ use crate::divisors;
 /// Given two integers a and b, returns whether
 /// a is equal to the sum of the proper divisors of b.
 ///
-/// Proper divisors include all divisors except the number itself, including 1.
-///
 /// # Examples
 ///
 /// ```
