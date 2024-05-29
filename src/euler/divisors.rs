@@ -67,7 +67,7 @@ pub fn divs_all(dividend: u64) -> Vec<u64> {
     let mut period: usize = n_factors as usize;
     let mut combos: Vec<u32>;
     for (i, p) in powers.iter().enumerate() {
-        period = period / (*p + 1) as usize;
+        period /= (*p + 1) as usize;
 
         combos = (0..=*p)
             .flat_map(|x: u32| repeat(x).take(period))
@@ -80,11 +80,11 @@ pub fn divs_all(dividend: u64) -> Vec<u64> {
 
     let mut factors: Vec<u64> = vec![0; n_factors as usize];
     let mut factor: u64 = 1;
-    for j in 0..(n_factors as usize) {
+    for (j, factor_current) in factors.iter_mut().enumerate().take(n_factors as usize) {
         for (i, p) in divisors.iter().enumerate() {
             factor *= p.pow(powers_grid[i][j]);
         }
-        factors[j] = factor;
+        *factor_current = factor;
         factor = 1;
     }
     factors.sort();

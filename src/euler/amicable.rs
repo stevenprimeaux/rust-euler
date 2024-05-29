@@ -33,10 +33,8 @@ pub fn ami_sum(limit: u64) -> u64 {
     for a in 2..limit {
         let b: u64 = divisors::divs_proper(a).iter().sum();
 
-        if a != b && b < limit {
-            if is_amicable(a, b) {
-                sum += a + b;
-            }
+        if a != b && b < limit && is_amicable(a, b) {
+            sum += a + b;
         }
     }
 

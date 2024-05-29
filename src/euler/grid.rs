@@ -12,51 +12,51 @@ pub fn grid_to_vec_fn(grid: String, delim: fn(char) -> bool) -> Vec<u64> {
         .collect()
 }
 
-pub fn grid_rows(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+pub fn grid_rows(vec: &[u64], n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
     let mut array: Vec<Vec<u64>> = vec![vec![0; n_cols]; n_rows];
     let mut i_row: usize;
     let mut i_col: usize;
-    for n in 0..vec.len() {
-        i_row = n / n_cols;
-        i_col = n - (i_row * n_cols);
-        array[i_row][i_col] = vec[n];
+    for (idx, item) in vec.iter().enumerate() {
+        i_row = idx / n_cols;
+        i_col = idx - (i_row * n_cols);
+        array[i_row][i_col] = *item;
     }
 
     array
 }
 
-pub fn grid_cols(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+pub fn grid_cols(vec: &[u64], n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
     let mut array: Vec<Vec<u64>> = vec![vec![0; n_rows]; n_cols];
     let mut i_row: usize;
     let mut i_col: usize;
-    for n in 0..vec.len() {
-        i_row = n / n_cols;
-        i_col = n - (i_row * n_cols);
-        array[i_col][i_row] = vec[n];
+    for (idx, item) in vec.iter().enumerate() {
+        i_row = idx / n_cols;
+        i_col = idx - (i_row * n_cols);
+        array[i_col][i_row] = *item;
     }
 
     array
 }
 
-pub fn grid_diags_neg(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+pub fn grid_diags_neg(vec: &[u64], n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
     let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_rows];
     let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_cols];
     let mut current_diag: Vec<u64>;
 
-    for i in 0..n_rows {
+    for (i, subarray_current) in num_array_lower.iter_mut().enumerate().take(n_rows) {
         current_diag = vec![];
         for j in ((i * n_rows)..(vec.len())).step_by(n_cols + 1) {
             current_diag.push(vec[j]);
         }
-        num_array_lower[i] = current_diag;
+        *subarray_current = current_diag;
     }
 
-    for i in 0..n_cols {
+    for (i, subarray_current) in num_array_upper.iter_mut().enumerate().take(n_cols) {
         current_diag = vec![];
         for j in (i..(vec.len() - (i * n_cols))).step_by(n_cols + 1) {
             current_diag.push(vec[j]);
         }
-        num_array_upper[i] = current_diag;
+        *subarray_current = current_diag;
     }
 
     num_array_lower.reverse();
@@ -69,25 +69,25 @@ pub fn grid_diags_neg(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u
     num_array_full
 }
 
-pub fn grid_diags_pos(vec: &Vec<u64>, n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
+pub fn grid_diags_pos(vec: &[u64], n_rows: usize, n_cols: usize) -> Vec<Vec<u64>> {
     let mut num_array_upper: Vec<Vec<u64>> = vec![vec![]; n_rows];
     let mut num_array_lower: Vec<Vec<u64>> = vec![vec![]; n_cols];
 
-    for i in 0..n_rows {
+    for (i, subarray_current) in num_array_upper.iter_mut().enumerate().take(n_rows) {
         let mut current_diag: Vec<u64> = vec![];
         for j in (i..((i * n_rows) + 1)).step_by(n_cols - 1) {
             current_diag.push(vec[j]);
         }
 
-        num_array_upper[i] = current_diag;
+        *subarray_current = current_diag;
     }
 
-    for i in 0..n_cols {
+    for (i, subarray_current) in num_array_lower.iter_mut().enumerate().take(n_cols) {
         let mut current_diag: Vec<u64> = vec![];
         for j in ((n_cols * i + (n_cols - 1))..((vec.len() - n_cols) + 1 + i)).step_by(n_cols - 1) {
             current_diag.push(vec[j]);
         }
-        num_array_lower[i] = current_diag;
+        *subarray_current = current_diag;
     }
 
     let mut num_array_full: Vec<Vec<u64>> = num_array_upper;

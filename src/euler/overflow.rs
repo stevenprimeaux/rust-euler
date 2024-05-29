@@ -1,11 +1,11 @@
 use super::grid;
 
 pub fn oflow_fix(digits_vec: &mut Vec<u64>) {
-    let mut overflow: bool = true;
+    let mut is_overflow: bool = true;
     let mut digit_current: u64;
 
-    while overflow == true {
-        overflow = false;
+    while is_overflow {
+        is_overflow = false;
         for i in 0..(digits_vec.len()) {
             digit_current = digits_vec[i];
             if digit_current >= 10 {
@@ -15,7 +15,7 @@ pub fn oflow_fix(digits_vec: &mut Vec<u64>) {
                 digits_vec[i] = digit_current % 10;
                 digits_vec[i + 1] += digit_current / 10;
 
-                overflow = true;
+                is_overflow = true;
             }
         }
     }
@@ -25,8 +25,8 @@ pub fn oflow_factorial(n: u64) -> u64 {
     let mut digits_vec: Vec<u64> = vec![1];
 
     for n_current in 1..=n {
-        for i in 0..digits_vec.len() {
-            digits_vec[i] *= n_current;
+        for digit in &mut digits_vec {
+            *digit *= n_current;
         }
         oflow_fix(&mut digits_vec);
     }
@@ -38,8 +38,8 @@ pub fn oflow_pow(base: u64, pow: u32) -> u64 {
     let mut digits_vec: Vec<u64> = vec![base];
 
     for _ in 2..=pow {
-        for i in 0..digits_vec.len() {
-            digits_vec[i] *= base;
+        for digit in &mut digits_vec {
+            *digit *= base;
         }
         oflow_fix(&mut digits_vec);
     }

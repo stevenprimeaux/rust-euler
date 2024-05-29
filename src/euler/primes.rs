@@ -40,8 +40,8 @@ pub fn prime_array(limit: usize) -> Vec<u64> {
     let mut index: usize = 1;
     primes[0] = 2;
 
-    for i in 1..sieve.len() {
-        if !sieve[i] {
+    for (i, is_composite) in sieve.iter().enumerate().skip(1) {
+        if !is_composite {
             primes[index] = ((2 * i) + 1) as u64;
             index += 1;
         }
@@ -53,8 +53,8 @@ pub fn prime_array(limit: usize) -> Vec<u64> {
 pub fn prime_sum(limit: usize) -> u64 {
     let sieve: Vec<bool> = prime_sieve(limit);
     let mut sum: u64 = 2;
-    for k in 1..sieve.len() {
-        if !sieve[k] {
+    for (k, is_composite) in sieve.iter().enumerate().skip(1) {
+        if !is_composite {
             sum += ((2 * k) + 1) as u64;
         }
     }

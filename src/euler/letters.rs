@@ -34,13 +34,13 @@ pub fn letters_build_phrase(n: u32) -> String {
     }
 
     phrase = phrase.replace("one ten", "ten");
-    phrase = phrase.replace(",", "");
+    phrase = phrase.replace(',', "");
 
     phrase
 }
 
 pub fn letters_count_chars(phrase: &str) -> usize {
-    phrase.replace("-", "").replace(" ", "").chars().count()
+    phrase.replace(['-', ' '], "").chars().count()
 }
 
 pub fn letters_count_chars_cum(limit: u32) -> usize {

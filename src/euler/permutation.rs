@@ -31,18 +31,14 @@ pub fn perm_lex(mut vec: Vec<u64>, n: u64) -> String {
         k = vec
             .windows(2)
             .map(|x: &[u64]| x[0] < x[1])
-            .rposition(|x: bool| x == true);
+            .rposition(|x: bool| x);
 
         match k {
             None => return String::from(""),
             Some(k) => {
                 a_k = vec[k];
 
-                l = vec
-                    .iter()
-                    .map(|x| x > &a_k)
-                    .rposition(|x| x == true)
-                    .unwrap();
+                l = vec.iter().map(|x| x > &a_k).rposition(|x| x).unwrap();
 
                 vec.swap(k, l);
 

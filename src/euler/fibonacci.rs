@@ -1,7 +1,7 @@
 use super::overflow::oflow_fix;
 
 pub fn fib_nth_even(n: usize) -> u32 {
-    if n <= 0 {
+    if n == 0 {
         return 0;
     }
     if n == 1 {
@@ -57,8 +57,8 @@ pub fn fib_oflow(digits: usize) -> usize {
         for (i, (a_val, b_val)) in a.iter().zip(&b).enumerate() {
             c[i] = a_val + b_val;
         }
-        a = b.clone();
-        b = c.clone();
+        a.clone_from(&b);
+        b.clone_from(&c);
 
         oflow_fix(&mut a);
         oflow_fix(&mut b);

@@ -19,16 +19,16 @@ pub fn tri_sum(n_div: u64) -> u64 {
             n_1 /= 2
         }
         d_n_1 = 1;
-        for i in 0..(primes.len() - 1) {
-            if primes[i] * primes[i] > n_1 {
+        for p in primes.iter().take(primes.len() - 1) {
+            if p * p > n_1 {
                 d_n_1 *= 2;
                 break;
             }
 
             exp = 1;
-            while n_1 % primes[i] == 0 {
+            while n_1 % p == 0 {
                 exp += 1;
-                n_1 /= primes[i];
+                n_1 /= p;
             }
             if exp > 1 {
                 d_n_1 *= exp;

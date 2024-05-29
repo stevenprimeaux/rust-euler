@@ -49,10 +49,8 @@ pub fn cal_firstsundays_count(year_start: u16, year_end: u16, dayweek_start: u64
     let years: Vec<Year> = cal_years(year_start..=year_end);
     for y in years {
         for d in 1..=y.days {
-            if count_days % 7 == 0 {
-                if y.month_starts.contains(&d) {
-                    count_firstsundays += 1;
-                }
+            if count_days % 7 == 0 && y.month_starts.contains(&d) {
+                count_firstsundays += 1;
             }
             count_days += 1;
         }

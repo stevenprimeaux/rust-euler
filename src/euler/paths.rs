@@ -16,14 +16,13 @@ pub fn path_count(dim: u128) -> u128 {
 }
 
 pub fn path_sum_tri(tri: String) -> u64 {
-    let rows = tri.trim().split("\n");
+    let rows = tri.trim().split('\n');
     let mut array: Vec<Vec<u64>> = vec![];
     let mut array_spaced: Vec<Vec<u64>> = vec![vec![0; 29]; 15];
 
     let mut row;
     for r in rows {
         row = r
-            .trim()
             .split_whitespace()
             .filter_map(|s: &str| s.parse().ok())
             .collect::<Vec<u64>>();
@@ -70,9 +69,9 @@ pub fn path_sum_tri(tri: String) -> u64 {
 
                 let mut current_path: Vec<u64> = vec![0; left_path.len()];
                 if right_sum > left_sum {
-                    current_path.copy_from_slice(&right_path);
+                    current_path.copy_from_slice(right_path);
                 } else {
-                    current_path.copy_from_slice(&left_path);
+                    current_path.copy_from_slice(left_path);
                 }
                 current_path.push(*element);
 

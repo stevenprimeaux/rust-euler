@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 pub fn collatz_brute(n: u64, count: usize) -> (u64, usize) {
     if n == 1 {
-        return (1, count);
+        (1, count)
     } else if n % 2 == 0 {
         return collatz_brute(n / 2, count + 1);
     } else {
@@ -15,12 +15,11 @@ pub fn collatz_map(n: u64, counts: &mut HashMap<u64, usize>) -> usize {
         return counts[&n];
     }
 
-    let count: usize;
-    if n % 2 == 0 {
-        count = 1 + collatz_map(n / 2, counts);
+    let count: usize = if n % 2 == 0 {
+        1 + collatz_map(n / 2, counts)
     } else {
-        count = 2 + collatz_map((3 * n + 1) / 2, counts);
-    }
+        2 + collatz_map((3 * n + 1) / 2, counts)
+    };
     counts.insert(n, count);
 
     counts[&n]
