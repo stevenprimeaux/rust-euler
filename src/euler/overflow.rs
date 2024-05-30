@@ -47,6 +47,19 @@ pub fn oflow_pow(base: u64, pow: u32) -> u64 {
     digits_vec.iter().sum()
 }
 
+pub fn oflow_pow_vec(base: u64, pow: u32) -> Vec<u64> {
+    let mut digits_vec: Vec<u64> = vec![base];
+
+    for _ in 2..=pow {
+        for digit in &mut digits_vec {
+            *digit *= base;
+        }
+        oflow_fix(&mut digits_vec);
+    }
+
+    digits_vec
+}
+
 pub fn oflow_sum_rows(grid: String, n_rows: usize, n_cols: usize) -> String {
     let mut digits_vec: Vec<u64> = grid::grid_cols_sums(grid, n_rows, n_cols);
     let mut digits: String = String::from("");

@@ -13,6 +13,7 @@ pub mod overflow;
 pub mod palindrome;
 pub mod paths;
 pub mod permutation;
+pub mod powers;
 pub mod primes;
 pub mod pythagorean;
 pub mod quadratic;
